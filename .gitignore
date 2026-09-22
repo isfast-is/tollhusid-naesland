@@ -1,0 +1,5 @@
+app.html
+.passphrase
+assets/foto*
+*.pyc
+__pycache__/
