@@ -368,6 +368,72 @@ h_res2 = kl('Verð sem hótelfélag gæti boðið', f"={h_val}-{h_cap}-{h_val}*{
 wk.cell(kr-1, 2).fill = YEL; kr += 1
 wk.cell(kr, 1, 'Viðmið seljanda: fasteignamat 4.725 (2026) / 4.915 (2027); mat ríkisins sjálfs 2022 „a.m.k. 2 ma.kr“; brunabótamat 6.000. Ríkið selur eftir fjárlagaheimild og velur að öllu jöfnu hæsta gilda tilboð, en má hafna öllum.').font = Font(name=F, size=9, italic=True)
 
+
+# ============================================================== RÉTT VERÐ (bein afleiðsla A-B-C-D)
+wp = wb.create_sheet('Rétt verð', 4); setw(wp, [66, 14, 12, 12, 12, 12, 12, 60])
+wp['A1'] = 'Rétt verð fyrir húsið eins og það er – bein afleiðsla: A framkvæmd → B tekjur → C leiga → D arðsemi → verð'; wp['A1'].font = H1
+wp['A2'] = 'Allt á verðlagi 2026, m.kr án VSK. Bláar tölur má breyta; sjálfgefið er sótt úr Framkvæmd/Rekstur/Forsendur (grænt) en yfirskrifa má með eigin tölu í dálki C. Tilboðið miðast við stækkaða húsið ef "full/top" er valið á Forsendur, með walk-away fyrirvara um þær skipulagsheimildir.'; wp['A2'].font = Font(name=F, size=9, italic=True)
+pr = 4; pref = {}
+def pl(key, label, formula, fmt=NUM1, note='', bold=False, inp_=False, override=False):
+    global pr
+    wp.cell(pr, 1, label).font = BOLD if bold else BLK
+    c = wp.cell(pr, 2, formula); c.number_format = fmt; c.font = BLUE if inp_ else (BOLD if bold else GRN if str(formula).startswith('=') and '!' in str(formula) else BLK)
+    if override:
+        o = wp.cell(pr, 3, ''); o.font = BLUE; o.fill = YEL; o.number_format = fmt
+    wp.cell(pr, 8, note).font = Font(name=F, size=9, color='808080'); pref[key] = f"$B${pr}"; pr += 1
+wp.cell(pr, 1, 'A. Framkvæmd').font = H2; wp.cell(pr, 3, 'yfirskrift').font = Font(name=F, size=9, color='808080'); pr += 1
+pl('keys', 'Herbergi (skv. Forsendur, með viðbótarbyggingarmagni ef valið)', f"={ref['keys']}", NUM)
+pl('a_key_link', 'Framkvæmd á herbergi skv. Framkvæmd-flipa', f"=Framkvæmd!E{fr['per_key']}", NUM1)
+pl('a_key', 'A: framkvæmd á herbergi sem notuð er (yfirskrifa í C)', f"=IF(C{pr}=\"\",B{pr-1},C{pr})", NUM1, 'Sett inn eigin tölu, t.d. 45, ef við trúum lægri kostnaði', True, override=True)
+pl('A', 'A: framkvæmd alls án VSK og án fjármagns', f"={pref['a_key']}*{pref['keys']}", NUM, '', True)
+pr += 1; wp.cell(pr, 1, 'B. Heildartekjur').font = H2; pr += 1
+pl('b_link', 'Tekjur hótels alls skv. Rekstur (herbergi + F&B + annað)', f"={rref['rev']}", NUM)
+pl('B', 'B: tekjur hótels notaðar (yfirskrifa í C)', f"=IF(C{pr}=\"\",B{pr-1},C{pr})", NUM, '', True, override=True)
+pl('kola', 'Leiga Kolaportsins / starfsemi á jarðhæð (yfirskrifa í C)', f"=IF(C{pr}=\"\",{ref['kola_rent']},C{pr})", NUM1, 'RVK-auglýsing 2025: 45 m.kr/ár lágmark', override=True)
+pr += 1; wp.cell(pr, 1, 'C. Leiga og NOI eiganda').font = H2; pr += 1
+pl('c_link', 'Leiguhlutfall af hóteltekjum skv. Rekstur', f"={rref['rent_share']}", PCT)
+pl('C', 'C: leiguhlutfall notað (yfirskrifa í C)', f"=IF(C{pr}=\"\",B{pr-1},C{pr})", PCT, 'JHB ≈ 30%; varfærið 21–23%; Reitir/Íslandshótel ≈ 1,5 m.kr NOI/herb', True, override=True)
+pl('leiga', 'Leiga alls (C × B + Kolaport)', f"={pref['C']}*{pref['B']}+{pref['kola']}", NUM1)
+pl('fixed', 'Fastur eigandakostnaður (fasteignagjöld eftir endurmat, tryggingar, viðhaldssjóður 0,5% af A)', f"=({ref['fgj']}+{ref['vatn']})*{ref['fgj_uplift']}+{ref['ins']}+{pref['A']}*{ref['maint']}", NUM1)
+pl('mgmt', 'Umsýsla (1% af leigu)', f"={pref['leiga']}*{ref['mgmt']}", NUM1)
+pl('noi', 'NOI eiganda', f"={pref['leiga']}-{pref['fixed']}-{pref['mgmt']}", NUM1, '', True)
+pl('yld', 'Ávöxtunarkrafa kaupanda á fullbúna eign (yfirskrifa í C)', f"=IF(C{pr}=\"\",{ref['yld']},C{pr})", PCT2, 'Reitir nýkaup 7,8%, matskrafa 6,4–6,7%, ríkisleiga 5,7%', override=True)
+pl('V', 'Verðmæti fullbúins hótels = NOI / krafa', f"={pref['noi']}/{pref['yld']}", NUM, '', True)
+pr += 1; wp.cell(pr, 1, 'D. Arðsemi fjárfesta og kostnaður við bið og fjármögnun').font = H2; pr += 1
+pl('D', 'D: krafa fjárfesta sem álag á heildarkostnað (þróunarhagnaður)', 0.20, PCT, '12–15% IRR á 30% eigið fé yfir 4–5 ár jafngildir gróflega 15–25% álagi á heildarkostnað', True, True)
+pl('ltc', 'Byggingarlán, hlutfall', f"={ref['ltc']}", PCT)
+pl('r', 'Vextir byggingarláns (PIK)', f"={ref['cl_rate']}", PCT2)
+pl('t_a', 'Meðalfjármögnunartími framkvæmdar, ár (2 ár × 50% meðalstaða)', 1.0, '0.0', '', False, True)
+pl('t_p', 'Fjármögnunartími kaupverðs frá kaupum að endurfjármögnun, ár', 4.5, '0.0', 'Kaup 2027, stöðugur rekstur 2032', False, True)
+pl('F_A', 'Fjármagnskostnaður á framkvæmd', f"={pref['A']}*{pref['ltc']}*{pref['r']}*{pref['t_a']}", NUM1)
+pl('bid_ar', 'Biðtími fram að opnun, ár', 3, '0', '', False, True)
+pl('H', 'Biðtímakostnaður (fasteignagjöld, trygging, annað) að frádreginni Kolaportsleigu á biðtíma', f"=({ref['fgj']}+{ref['vatn']}+{ref['brunatr']}+{ref['hold_other']})*{pref['bid_ar']}-{pref['kola']}*(1+({pref['bid_ar']}-1)*{ref['kola_works']})", NUM1)
+pl('K', 'Stimpilgjald og kaupkostnaður', f"={ref['fmat']}*{ref['stimpil']}+{ref['kaupkostn']}", NUM1)
+pr += 1; wp.cell(pr, 1, 'Niðurstaða').font = H2; pr += 1
+pl('Vd', 'Verðmæti að frádreginni arðsemiskröfu = V / (1 + D)', f"={pref['V']}/(1+{pref['D']})", NUM)
+pl('res', '– A – fjármagn á A – biðtími – kaupkostnaður', f"={pref['Vd']}-{pref['A']}-{pref['F_A']}-{pref['H']}-{pref['K']}", NUM)
+pl('price', 'RÉTT VERÐ fyrir húsið eins og það er (eftir fjármagnskostnað á kaupverðið sjálft)', f"={pref['res']}/(1+{pref['ltc']}*{pref['r']}*{pref['t_p']})", NUM, 'Neikvætt = verkefnið ber ekki kaupverð við þessar forsendur', True)
+wp.cell(pr-1, 2).fill = YEL
+pl('price_key', 'á herbergi', f"={pref['price']}/{pref['keys']}", NUM1)
+pl('price_m2', 'á m² núverandi húss', f"={pref['price']}/{ref['A_total']}*1000", NUM, 'þ.kr/m²')
+pr += 1
+wp.cell(pr, 1, 'Næmni: rétt verð (m.kr) eftir A (framkvæmd á herbergi) og C (leiguhlutfall) – annað eins og að ofan').font = H2; pr += 1
+a_vals = [35, 45, 55, 65, 75]; c_vals = [0.22, 0.26, 0.30, 0.34]
+wp.cell(pr, 1, 'A: m.kr/herb  →  |  C: leiguhlutfall ↓').font = BOLD; wp.cell(pr, 1).fill = GREY
+for j, a in enumerate(a_vals): c = wp.cell(pr, 2+j, a); c.font = BOLD; c.fill = GREY; c.number_format = NUM
+hr = pr; pr += 1
+for cv in c_vals:
+    c = wp.cell(pr, 1, cv); c.number_format = PCT; c.font = BOLD; c.fill = GREY
+    for j, a in enumerate(a_vals):
+        col = L(2+j)
+        A_ = f"({col}${hr}*{pref['keys']})"
+        leiga = f"($A{pr}*{pref['B']}+{pref['kola']})"
+        noi = f"({leiga}-(({ref['fgj']}+{ref['vatn']})*{ref['fgj_uplift']}+{ref['ins']}+{A_}*{ref['maint']})-{leiga}*{ref['mgmt']})"
+        f = f"=({noi}/{pref['yld']}/(1+{pref['D']})-{A_}-{A_}*{pref['ltc']}*{pref['r']}*{pref['t_a']}-{pref['H']}-{pref['K']})/(1+{pref['ltc']}*{pref['r']}*{pref['t_p']})"
+        cc = wp.cell(pr, 2+j, f); cc.number_format = NUM
+    pr += 1
+wp.cell(pr+1, 1, 'Lestur: hver reitur er verðið fyrir húsið eins og það er. Talan sem seljandi vill sjá (≥ 2.000) krefst þess að lenda neðarlega til hægri í töflunni: lág framkvæmd á herbergi OG hátt leiguhlutfall. DCF-flipinn Sjóðstreymi gefur nákvæmari IRR-útreikning fyrir eitt kaupverð í einu.').font = Font(name=F, size=9, italic=True)
+
 # ============================================================== HEIMILDIR
 wh = wb.create_sheet('Heimildir'); setw(wh, [120])
 srcs = [
