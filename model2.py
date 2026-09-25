@@ -16,8 +16,8 @@ A_BOH = A_TOTAL - AREA['h1_kolaport'] - A_HOTEL_CONV                            
 #      3. hæð: inndregin, norðurhlið opnast út á þakflöt (garðherbergi). Breidd herbergja ræður: 3,9 m (27–30 m² nettó) / 4,5 m (33–36 m²).
 KEYS = {
     'þétt (3,9 m)':   dict(h5=39, h4=39, h3=28, h2=17, total=123),
-    'JHB (4,5 m)':    dict(h5=34, h4=34, h3=24, h2=14, total=106),
-    'JHB skipan':     dict(h5=34, h4=34, h3=10, h2=11, total=89),   # lobby á 3. hæð, gym á 2. hæð eins og í kynningu
+    'Næsland-breidd (4,5 m)': dict(h5=34, h4=34, h3=24, h2=14, total=106),
+    'Næsland-skipan': dict(h5=34, h4=34, h3=10, h2=11, total=89),   # lobby á 3. hæð, gym á 2. hæð eins og í kynningu
 }
 
 # ---- Hyatt-kaflar án VSK, þ.kr/m² (EAC júlí 2026) og aðlögun fyrir Tollhúsið
