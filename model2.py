@@ -32,6 +32,10 @@ UNC = 0.10                # ófyrirséð á framkvæmd (Hyatt endaði í 12% ofa
 SOFT = 0.13               # hönnun, byggingarstjórn, eftirlit, umsýsla (Hyatt 15,6% af framkvæmd)
 IF_FEE = 0.03
 NEWBUILD_RATE = HYATT['total']   # ofanábygging: Hyatt allt-í-allt sem viðmið fyrir nýbyggingu ofan á hús
+A_V1 = 5483.0                    # kostnaðaráætlun fullbúið hótel v1.0 (23.9.2026): hús fullbúið án lauss búnaðar, 123 herb.
+FFE_V1 = 739.0
+TIER_ADJ = {'A': 0.93, 'B': 1.0, 'C': 1.12}
+USE_V1 = True
 
 def capex(tier='B', keys=106, cost_factor=1.0, extra_m2=0.0, extra_use='none', ground='kolaport', detail=False):
     rate = sum(ADJ.values()) + TIER_INNAN[tier]
@@ -53,6 +57,15 @@ def capex(tier='B', keys=106, cost_factor=1.0, extra_m2=0.0, extra_use='none', g
             extra_ffe = extra_keys * TIER_FFE[tier]
         elif extra_use == 'ibudir':
             extra = extra_m2 * 950.0 / 1000.0 * 1.18   # íbúðir: VSK af byggingarkostnaði fæst ekki endurgreiddur
+    if USE_V1:
+        base = A_V1 * (0.65 + 0.35 * keys / 123.0) * TIER_ADJ[tier]
+        g_adj = ground_capex * 1.3
+        total = (base + g_adj) * cost_factor + extra + extra_ffe
+        ffe = 0.0
+        out = dict(rate=rate, conv=base, boh=0.0, lumps=0.0, ground_capex=g_adj, construction=base, unc=0.0, soft=0.0, fee=0.0, ffe=0.0,
+                   extra=extra, extra_keys=extra_keys, extra_ffe=extra_ffe, total=total, keys_total=keys + extra_keys, hotel_only=base * cost_factor)
+        out['per_key'] = out['hotel_only'] / keys
+        return out
     total = (construction + unc + soft + fee + ffe) * cost_factor + extra + extra_ffe
     out = dict(rate=rate, conv=conv, boh=boh, lumps=lumps, ground_capex=ground_capex, construction=construction, unc=unc, soft=soft, fee=fee, ffe=ffe,
                extra=extra, extra_keys=extra_keys, extra_ffe=extra_ffe, total=total, keys_total=keys + extra_keys,
