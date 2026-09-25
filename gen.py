@@ -263,7 +263,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 "use strict";
 const TIER={{A:{{adr:36000,occ:.72,fb:.20,other:.03,innan:210,ffe:3}},B:{{adr:48000,occ:.72,fb:.35,other:.05,innan:254,ffe:5}},C:{{adr:65000,occ:.68,fb:.45,other:.08,innan:320,ffe:8}}}};
 const A_CONV=6879.7,A_BOH=861.5,KOLA=2409.6;
-const A_V1={n1(A_HUS).replace(',','.')},FFE_V1={n1(A_FFE).replace(',','.')};
+const A_V1={A_HUS:.1f},FFE_V1={A_FFE:.1f};
 function capex(t,keys,cf,ground){{const tierAdj={{A:0.93,B:1.0,C:1.12}}[t];const base=(A_V1*0.65+A_V1*0.35*keys/123)*tierAdj;const g=ground==='matarholl'?KOLA*220/1000*1.3:0;return {{total:(base+g)*cf}};}}
 function rev(t,keys){{const T=TIER[t];const rooms=keys*T.adr*T.occ*365/1e6;return {{rooms,total:rooms*(1+T.fb+T.other)}};}}
 function calc(){{const t=tier.value,k=+keys.value,c=+cf.value,C=+Cc.value,g=ground.value,D=+Dd.value,y=+yy.value;

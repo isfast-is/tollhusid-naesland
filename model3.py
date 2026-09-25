@@ -29,7 +29,7 @@ def pl(tier, keys):
     ffe = rev * USALI['ffe']
     rent_usali = (ebitdar - ffe) * USALI['landlord_share']
     rent_oddsson = max(0.30 * rooms, 0.25 * rev)          # ÍF/RR hótel leigusamningur 2020 (Grensásvegur 16A, 77 herb.)
-    rent_jhb = 0.34 * rooms                               # Jón Haukur: 367 af 1.066 herbergistekjum
+    rent_jhb = 0.34 * rooms                               # Næsland: 367 af 1.066 herbergistekjum
     return dict(keys=keys, adr=t['adr'], occ=t['occ'], revpar=t['adr'] * t['occ'], rooms=rooms, fb=fb, other=other, rev=rev, rev_key=rev / keys,
                 dept=dept, gop=gop, gop_pct=gop / rev, ebitdar=ebitdar, ffe=ffe,
                 rent_usali=rent_usali, c_usali=rent_usali / rev, rent_oddsson=rent_oddsson, c_oddsson=rent_oddsson / rev,
@@ -55,7 +55,7 @@ def scenarios():
         for keys in (89, 106, 123):
             P = pl(tier, keys)
             for cf in (1.0, 0.8):
-                for cname, C in (('USALI 65%', P['c_usali']), ('ODDSSON', P['c_oddsson']), ('JHB 34% herb.', P['c_jhb'])):
+                for cname, C in (('USALI 65%', P['c_usali']), ('ODDSSON', P['c_oddsson']), ('Næsland 34% herb.', P['c_jhb'])):
                     for ground in ('kolaport', 'matarholl'):
                         for D, y in ((0.20, 0.0675), (0.10, 0.06)):
                             r = M2.rett_verd(tier, keys, C, D, y, cf, 0.0, 'none', ground)
