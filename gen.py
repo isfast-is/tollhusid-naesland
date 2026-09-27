@@ -356,7 +356,7 @@ if MODE == 'naesland':
         ('Excel: „Tollhúsið - Bakreikningur v1.0".', ''),
         ('Rýnd af GT og Sveini 25.9.2026.', 'Rýnd innanhúss hjá ÍF 25.9.2026.'),
         ('rýnd 25.9. Það eru', 'rýnd innanhúss. Það eru'),
-        ('GT/JHB/Daníel', 'ÍF/Næsland'),
+        ('Walk-away fyrirvari', 'Fyrirvari'), ('walk-away fyrirvari', 'fyrirvari'), ('walk-away', 'fyrirvara'), ('ODDSSON', 'viðmiðunarsamningur ÍF'),
     ]
     for a, b in REPL:
         if a not in HTML: print('  [kynning] fannst ekki:', a[:60])
