@@ -12,6 +12,7 @@ for _r in range(12, 27):
 A_HUS = [x for x in KOST if x[0].startswith('HÚS FULLBÚIÐ')][0][2] / 1e6
 A_FFE = [x for x in KOST if x[0].startswith('9.')][0][2] / 1e6
 HERE = os.path.dirname(os.path.abspath(__file__))
+MODE = os.environ.get('MODE', 'internal')   # 'internal' | 'naesland'
 R = json.load(open(os.path.join(HERE, 'results3.json')))
 def b64(fn):
     with open(os.path.join(HERE, 'assets', fn), 'rb') as f: return 'data:image/jpeg;base64,' + base64.b64encode(f.read()).decode()
@@ -57,6 +58,37 @@ def scen_rows(filter_fn):
 sel = scen_rows(lambda s: s['keys'] == 123 and s['cname'] in ('USALI 65%', 'ODDSSON') and s['tier'] in 'BC')
 
 head_scen = ['Fl.', 'Herb.', 'Kostn.', 'C-viðmið', 'C', 'Jarðhæð', 'D / krafa', 'A', 'A/herb', 'Leiga', 'NOI', 'Verðmæti', 'Rétt verð']
+
+
+KYN_SLIDE = '''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9</div><h2>Möguleg tilboðssviðsmynd – ef Næsland vill bjóða</h2><p class="lead">Mat ÍF í hnotskurn og hvað lágt tilboð með fullum fyrirvörum myndi krefjast. 123 herbergi, 75% nýting, leiga 25% af heildartekjum, framkvæmd skv. áætlun ÍF án lauss búnaðar.</p>
+<div class="callout hl"><b>Mat ÍF.</b> Á þeim forsendum sem hér eru raktar stendur hótel í Tollhúsinu ekki undir kaupverði sem seljandi er líklegur til að sætta sig við. Umbreytingin sjálf, um 5,5 ma.kr, ræður mestu; kaupverðið breytir tiltölulega litlu um verðið sem hvert herbergi þarf að seljast á. ÍF ráðleggur Næslandi því að bjóða ekki nema með lágu verði og fyrirvörum sem gera kleift að ganga frá ef forsendur standast ekki. Sé sá vilji fyrir hendi er sviðsmyndin hér að neðan sú sem við teljum verjanlega.</div>
+<div class="grid g2">
+<div>{tbl(['Tilboð', 'Sjónarhorn fjárfesta', 'Jarðhæð', 'Verð á nótt án VSK', 'Með VSK', 'Um það bil'], [
+ ['500 m.kr (11% af fmat)', 'Þróunaraðili, D 20%, krafa 6,75%', 'óbreytt', '58.500', '65.000', '€450'],
+ ['500 m.kr', 'Langtímaeigandi, D 10%, krafa 6,0%', 'óbreytt', '49.600', '55.100', '€380'],
+ ['500 m.kr', 'Langtímaeigandi', '×3 (markaðsleiga)', '44.700', '49.600', '€340'],
+ ['1.000 m.kr (21% af fmat)', 'Þróunaraðili, D 20%, krafa 6,75%', 'óbreytt', '63.100', '70.000', '€480'],
+ ['1.000 m.kr', 'Langtímaeigandi, D 10%, krafa 6,0%', 'óbreytt', '53.400', '59.200', '€410'],
+ ['1.000 m.kr', 'Langtímaeigandi', '×3 (markaðsleiga)', '48.500', '53.800', '€370'],
+ ['1.000 m.kr', 'Langtímaeigandi, ×3, kostnaður −10%, nýting 78%', '×3', '43.200', '47.900', '€330'],
+])}
+<p class="src">Ársmeðaltal á selda nótt. Sumarverð um 35% hærra, vetrarverð um 22% lægra. Til samanburðar: Íslandshótel 25.400 kr án VSK að meðaltali 2023, efra millistig í miðborginni 45–50.000, lúxus 65.000.</p>
+<div class="callout"><b>Lesturinn.</b> Munurinn á 500 m.kr og 1 ma.kr tilboði er um 4.500 kr á nótt. Munurinn á þróunaraðila og langtímaeiganda er um 9.000 kr, og Kolaportið á markaðsleigu um 5.000 kr. Þetta þrennt, ekki kaupverðið, ræður því hvort hótelið þarf að vera efra millistig eða lúxus.</div></div>
+<div><h3 style="margin:0 0 8px;color:var(--navy)">Fyrirvarar sem fylgja tilboðinu</h3><ul class="tight">
+<li><b>Ástandsskoðun og áreiðanleikakönnun</b> innan t.d. 90 daga: opnanir, myndun frárennslislagna í grunni, magn asbests og PCB, rakakortlagning, verktakatilboð í glugga, klæðningu og lagnir. Kaupandi getur gengið frá án kostnaðar ef niðurstaðan víkur frá forsendum.</li>
+<li><b>Deiliskipulag:</b> hótel heimilað á lóðinni ásamt tilgreindu viðbótarbyggingarmagni. Gangi breytingin ekki í gegn fellur samningurinn niður.</li>
+<li><b>Nýr lóðarleigusamningur</b> við Reykjavíkurborg með skilgreindum lágmarksskilmálum (lengd, lóðarleiga).</li>
+<li><b>Fjármögnun</b> innan tilgreinds frests.</li>
+<li><b>Forkaupsréttur og samþykki hafnarstjórnar</b> útkljáð, og staða Kolaportssamnings ríkis og borgar skýr.</li>
+<li><b>Söluheimild</b> ríkisins staðfest í fjárlögum og afhending ekki fyrr en að fyrirvörum uppfylltum.</li></ul>
+<h3 style="margin:16px 0 8px;color:var(--navy)">Hvað þarf að vera satt</h3><ul class="tight">
+<li>Rekstraraðili sem trúir á 50–60.000 kr meðalverð á nótt án VSK og skrifar undir 25 ára samning á um 25% af tekjum með ábyrgð.</li>
+<li>Langtímaeigandi að fullbúinni eign á um 6% kröfu, samið fyrirfram.</li>
+<li>Jarðhæðin á markaðsleigu í sátt við borgina.</li>
+<li>Framkvæmdakostnaður á eða undir áætlun ÍF, staðfestur með tilboðum áður en fyrirvörum er aflétt.</li></ul>
+<div class="callout"><b>Hvað seljandi sér.</b> Fasteignamat 4,7 ma.kr; ríkið mat húsið sjálft á að minnsta kosti 2 ma.kr 2022. Tilboð upp á 0,5–1 ma.kr með sex fyrirvörum verður ekki hæsta tilboðið ef aðrir bjóða. Það er verjanlegt verð, ekki líklegt vinningsverð.</div></div>
+</div></section>
+'''
 
 HTML = f'''<!doctype html><html lang="is"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>Tollhúsið – Næsland · greining fyrir tilboð</title>
@@ -292,5 +324,53 @@ const secs=[...document.querySelectorAll('section')],links=[...document.querySel
 document.addEventListener('keydown',e=>{{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;const y=window.scrollY+10;let i=secs.findIndex(s=>s.offsetTop>y);if(i<0)i=secs.length;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){{e.preventDefault();(secs[Math.min(i,secs.length-1)]||secs[0]).scrollIntoView();}}if(e.key==='ArrowLeft'||e.key==='PageUp'){{e.preventDefault();(secs[Math.max(i-2,0)]).scrollIntoView();}}}});
 const io=new IntersectionObserver(es=>es.forEach(en=>{{if(en.isIntersecting){{links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+en.target.id));}}}}),{{threshold:.4}});secs.forEach(s=>io.observe(s));
 </script></body></html>'''
-open(os.path.join(HERE, 'app.html'), 'w', encoding='utf-8').write(HTML)
-print('app.html', len(HTML.encode()) // 1000, 'kB')
+if MODE == 'naesland':
+    import re as _re
+    REPL = [
+        ('Vinnuskjal GT/ÍF. Gögn frá Næslandi, COWI, TORG, skjalasafni Reykjavíkur og áætlunum ÍF. Ekkert hefur farið út úr húsi.', 'Kynning Íslenskra fasteigna fyrir Næsland · trúnaðarmál · 29. september 2026. Gögn frá Næslandi, COWI, TORG, skjalasafni Reykjavíkur og áætlunum ÍF.'),
+        ('<nav><h1>TOLLHÚSIÐ</h1><div class="sub">Næsland · greining fyrir tilboð · trúnaðarmál</div>', '<nav><h1>TOLLHÚSIÐ</h1><div class="sub">Kynning ÍF fyrir Næsland · trúnaðarmál</div>'),
+        ('Drög 2 · 25.9.2026 · líkan v0.4', 'Kynningarútgáfa · 29.9.2026'),
+        ("localStorage.removeItem('tollhus_pass')", "localStorage.removeItem('tollhus_kyn_pass')"),
+        ('ODDSSON-samningur ÍF 25% (30% af herbergistekjum)', 'leigusamningur sem ÍF þekkir um 77 herbergja hótel í Reykjavík: 25% (30% af herbergistekjum)'),
+        ('ODDSSON – leigusamningur ÍF/RR hótel 2020 (77 herb., Grensásvegur 16A)', 'Leigusamningur um 77 herbergja hótel í Reykjavík (2020), sem ÍF þekkir'),
+        ('isfast Drive: Grensásvegur 16a/Leigusamningar/RR hótel', 'Gögn ÍF'),
+        ('Flóra – Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025 (120 herb.)', 'Rekstraráætlun rekstraraðila fyrir nýtt 120 herbergja hótel á Suðurlandi (2025)'),
+        ('isfast Drive: Ölfus/BBR/Black Beach Resort Collaboration', 'Gögn ÍF'),
+        ('BBR módel v1 (ÍF, apríl 2026)', 'Líkan ÍF fyrir nýtt hótelverkefni (2026)'),
+        ('isfast Drive: Ölfus/BBR/2026 Verkefnavinna', 'Gögn ÍF'),
+        ('Leiga ODDSSON (max 30% herb. / 25% alls)', 'Leiga skv. samningi sem ÍF þekkir (max 30% herb. / 25% alls)'),
+        ('efri mörkin úr samningi ÍF sjálfs við RR hótel um ODDSSON (30% af herbergistekjum eða 25% af heildartekjum). Flóra gerði ráð fyrir 30% í Þorlákshöfn og skildi rekstraraðilann eftir með 2–4% EBITDA, sem er ekki sjálfbært.', 'efri mörkin úr leigusamningi um 77 herbergja hótel í Reykjavík sem ÍF þekkir (30% af herbergistekjum eða 25% af heildartekjum). Í nýlegri rekstraráætlun fyrir nýtt 120 herbergja hótel var gert ráð fyrir 30% og rekstraraðilinn skilinn eftir með 2–4% EBITDA, sem er ekki sjálfbært.'),
+        ('Hreinn veltusamningur eins og ODDSSON er ekki bankahæfur', 'Hreinn veltusamningur er ekki bankahæfur'),
+        ('ODDSSON 2021 (ÍF, 77 herb.)', '77 herbergja hótel í Reykjavík, áætlun 2021'),
+        ('Áætlun 06/2020, isfast Drive', 'Gögn ÍF'),
+        ('Black Dunes Þorlákshöfn (Flóra, 120 herb.)', 'Nýtt 120 herbergja hótel á Suðurlandi, áætlun rekstraraðila'),
+        ('Rekstraráætlun 17.3.2025, isfast Drive', 'Gögn ÍF'),
+        ('Rekstrar- og söluáætlun draft 1', 'Rekstrar- og söluáætlun Næslands'),
+        ('ODDSSON-leiga 25%', 'leiga 25%'),
+        ('<h3 style="margin:0 0 8px;color:var(--navy)">Tilboðsform sem GT hefur ákveðið</h3>', '<h3 style="margin:0 0 8px;color:var(--navy)">Tilboðsform sem ÍF leggur til</h3>'),
+        ('<li>Þróunarfélag ÍF og Næsland-hópsins, ÍF þróunaraðili og verkefnastjóri með þóknun sem eignarhlut; Íslandshótel hugsanlega í félaginu.</li>', '<li>Þróunarfélag Næslands og ÍF, ÍF þróunaraðili og verkefnastjóri; Íslandshótel hugsanlega í félaginu.</li>'),
+        ('<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun v1.0.</li>', '<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun ÍF.</li>'),
+        ('<li>ÍF/RR hótel: leigusamningur ODDSSON 2020 með viðauka 2021; áætlun 06/2020.</li>', '<li>Leigusamningar og rekstraráætlanir hótela sem ÍF þekkir (trúnaðarmál, ekki birt).</li>'),
+        ('<li>Flóra/ÍF: Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025, BBR módel v1 2026.</li>', ''),
+        ('Líkan: model.py / model2.py / model3.py og Excel v0.1 í Claude Projects/Tollhúsið Næsland/. Þessi síða er drög 1, 22.9.2026, og verður uppfærð þegar A og C hafa verið fest.', 'Kynningarútgáfa fyrir Næsland, 29.9.2026. Líkön og áætlanir ÍF liggja að baki og eru ekki birt hér í heild.'),
+        ('Excel: „Tollhúsið - Bakreikningur v1.0".', ''),
+        ('Rýnd af GT og Sveini 25.9.2026.', 'Rýnd innanhúss hjá ÍF 25.9.2026.'),
+        ('rýnd 25.9. Það eru', 'rýnd innanhúss. Það eru'),
+        ('GT/JHB/Daníel', 'ÍF/Næsland'),
+    ]
+    for a, b in REPL:
+        if a not in HTML: print('  [kynning] fannst ekki:', a[:60])
+        HTML = HTML.replace(a, b)
+    # add the offer-scenario slide before s9
+    HTML = HTML.replace('<section id="s9">', KYN_SLIDE + '<section id="s9">', 1)
+    HTML = HTML.replace('<a href="#s8b">Bakreikningur · verð á nótt</a>', '<a href="#s8b">Bakreikningur · verð á nótt</a><a href="#s8c" style="color:var(--gold);font-weight:700">★ Möguleg tilboðssviðsmynd</a>')
+    HTML = HTML.replace('.hero{{', '.hl{{border:2px solid var(--gold);background:#FFFBEA}}.hero{{') if '.hl{{' not in HTML else HTML
+    HTML = HTML.replace('.hero{', '.hl{border:2px solid var(--gold);background:#FFFBEA}.hero{', 1)
+    for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
+        n = len(_re.findall(w, _re.sub(r'data:image[^"]*', '', HTML)))
+        if n: print(f'  [kynning] VIÐVÖRUN: "{w}" kemur fyrir {n}x')
+    out = os.path.join(HERE, 'app_kynning.html')
+else:
+    out = os.path.join(HERE, 'app.html')
+open(out, 'w', encoding='utf-8').write(HTML)
+print(os.path.basename(out), len(HTML.encode()) // 1000, 'kB')

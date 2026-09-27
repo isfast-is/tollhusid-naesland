@@ -3,3 +3,5 @@ app.html
 assets/foto*
 *.pyc
 __pycache__/
+app_kynning.html
+.passphrase_kynning
