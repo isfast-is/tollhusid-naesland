@@ -55,16 +55,16 @@ def scen_rows(filter_fn):
         rows.append([s['tier'], s['keys'], pct(s['cf']), s['cname'], pct(s['C'], 1), 'Kolaport 45' if s['ground'] == 'kolaport' else 'Matarhöll 159', pct(s['D']) + ' / ' + pct(s['yld'], 2),
                      n0(s['A']), n0(s['per_key']), n0(s['leiga']), n0(s['noi']), n0(s['V']), f"<b>{neg(s['price'])}</b>"])
     return rows
-sel = scen_rows(lambda s: s['keys'] == 123 and s['cname'] in ('USALI 65%', 'ODDSSON') and s['tier'] in 'BC')
+sel = scen_rows(lambda s: s['keys'] == 122 and s['cname'] in ('USALI 65%', 'ODDSSON') and s['tier'] in 'NBC')
 
 head_scen = ['Fl.', 'Herb.', 'Kostn.', 'C-viðmið', 'C', 'Jarðhæð', 'D / krafa', 'A', 'A/herb', 'Leiga', 'NOI', 'Verðmæti', 'Rétt verð']
 
 
 S8C_ROWS = [[f"{int(r[0]):,} m.kr ({r[0]/4725.5*100:.0f}% af fmat)".replace(',', '.'), r[1], ('óbreytt' if r[2]==1 and r[3]==0 else f'salur ×{r[2]:g} + blokkir {int(r[3]):,} kr/m²'.replace(',', '.')), f'{r[4]:,.0f}'.replace(',', '.'), f'{r[5]:,.0f}'.replace(',', '.'), f'€{r[6]:,.0f}'] for r in json.load(open(os.path.join(HERE, 's8c_rows.json')))]
-KYN_SLIDE = '''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9</div><h2>Möguleg tilboðssviðsmynd – ef Næsland vill bjóða</h2><p class="lead">Mat ÍF í hnotskurn og hvað lágt tilboð með fullum fyrirvörum myndi krefjast. 122 herbergi skv. skipan Næslands, 73,6% nýting, 20% F&B, leiga 25% af heildartekjum, framkvæmd skv. áætlun ÍF v1.1 án lauss búnaðar.</p>
+KYN_SLIDE = f'''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9</div><h2>Möguleg tilboðssviðsmynd – ef Næsland vill bjóða</h2><p class="lead">Mat ÍF í hnotskurn og hvað lágt tilboð með fullum fyrirvörum myndi krefjast. 122 herbergi skv. skipan Næslands, 73,6% nýting, 20% F&B, leiga 25% af heildartekjum, framkvæmd skv. áætlun ÍF v1.1 án lauss búnaðar.</p>
 <div class="callout hl"><b>Mat ÍF.</b> Á þeim forsendum sem hér eru raktar stendur hótel í Tollhúsinu ekki undir kaupverði sem seljandi er líklegur til að sætta sig við. Umbreytingin sjálf, um 5,5 ma.kr, ræður mestu; kaupverðið breytir tiltölulega litlu um verðið sem hvert herbergi þarf að seljast á. ÍF ráðleggur Næslandi því að bjóða ekki nema með lágu verði og fyrirvörum sem gera kleift að ganga frá ef forsendur standast ekki. Sé sá vilji fyrir hendi er sviðsmyndin hér að neðan sú sem við teljum verjanlega.</div>
 <div class="grid g2">
-<div>{tbl(['Tilboð', 'Sjónarhorn fjárfesta', 'Jarðhæð', 'Verð á nótt án VSK', 'Með VSK', 'Um það bil'], S8C_ROWS)}
+<div>{tbl(['Tilboð', 'Sjónarhorn fjárfesta', 'Jarðhæð', 'Verð á nótt án VSK', 'Með VSK', 'Um það bil'], S8C_ROWS, 'nw')}
 <p class="src">Ársmeðaltal á selda nótt. Sumarverð um 35% hærra, vetrarverð um 22% lægra. Til samanburðar: Íslandshótel 25.400 kr án VSK að meðaltali 2023, efra millistig í miðborginni 45–50.000, lúxus 65.000.</p>
 <div class="callout"><b>Lesturinn.</b> Munurinn á 500 m.kr og 1 ma.kr tilboði er um 5.000 kr á nótt. Munurinn á þróunaraðila og langtímaeiganda er um 10.000 kr, og jarðhæðin öll á markaðsleigu um 16.000 kr. Þetta þrennt, ekki kaupverðið, ræður því hvort hótelið þarf að vera efra millistig eða lúxus.</div>
 <div class="callout hl"><b>Forsendur Næslands 27.9.2026 í sömu keðju.</b> Leiguþol 460 m.kr + Kolaportið 45,6 ber kaupverð upp á −681 m.kr hjá langtímaeiganda og −1.421 m.kr hjá þróunaraðila. Með jarðhæðina alla á markaðsleigu (salur ×3 + blokkir 5.000 kr/m²/mán) verður það +1.085 m.kr hjá langtímaeiganda. Jarðhæðin er verkefnið.</div></div>
@@ -172,14 +172,14 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <section id="s4"><div class="k">4 · A</div><h2>Umbreytingarkostnaður – áætlun ÍF v1.1</h2><p class="lead">Kostnaðaráætlun fullbúins hótels í sniði ÍF, kaflar 0–9 með magni, einingarverðum og heimild við hverja línu. Rýnd af GT og Sveini 25.9.2026. Allt án VSK á verðlagi september 2026. Kolaportssalurinn, 2.410 m², er utan áætlunar.</p>
 <div class="grid g2">
 <div>{tbl(['Kafli', 'þ.kr/m²', 'm.kr', 'm.kr/herb', 'Næsland m.kr'], [[k, n1(a) if a else '', n0(b/1e6) if b else '', n1(c) if c else '', (n0(d/1e6) if d else '–')] for k, a, b, c, d in KOST])}
-<p class="src">Grunnur kr/m²: hótelhluti 7.742 m² (6.857 m² gestarými + 885 m² tæknirými), 123 herbergi, 63 m² brúttó á herbergi. Næsland-dálkur: vinnuskjal Næslands án VSK, 100 herbergi.</p></div>
+<p class="src">Grunnur kr/m²: hótelhluti 7.742 m² (6.857 m² gestarými + 885 m² tæknirými), 122 herbergi, 63 m² brúttó á herbergi. Næsland-dálkur: vinnuskjal Næslands án VSK, 100 herbergi.</p></div>
 <div>
-<div class="callout"><b>Herbergið sjálft er ekki vandamálið.</b> Veggir, bað, hurðir, gólf, loft, málun og fastar innréttingar eru um 4,8 m.kr á herbergi. Hitt, um 40 m.kr á herbergi, er húsið og kerfin: gluggaveggir og klæðning, lagnir, loftræsing, raflagnir og lyftur, aðstaða, niðurrif og afmengun, frárennsli í grunni, gangar, lobby, veitingar og spa, ófyrirséð og hönnun. Deilt með 123 herbergjum.</div>
+<div class="callout"><b>Herbergið sjálft er ekki vandamálið.</b> Veggir, bað, hurðir, gólf, loft, málun og fastar innréttingar eru um 4,8 m.kr á herbergi. Hitt, um 40 m.kr á herbergi, er húsið og kerfin: gluggaveggir og klæðning, lagnir, loftræsing, raflagnir og lyftur, aðstaða, niðurrif og afmengun, frárennsli í grunni, gangar, lobby, veitingar og spa, ófyrirséð og hönnun. Deilt með 122 herbergjum.</div>
 <div class="callout"><b>Það sem COWI kallar á</b> er um 1,0 ma.kr af heildinni, eða 8 m.kr á herbergi: gluggaveggir 1.600 m², klæðning steyptra flata, frárennsli í grunni, asbest, PCB og mygla, Kolaportsþak og gaflar. COWI verðleggur aðeins múr, klæðningu og 20 ára viðhald; hitt er mat ÍF þar til tilboð liggja fyrir.</div>
 <div class="callout"><b>Það sem þarf að rýna sérstaklega:</b> gluggaveggir 210 þ.kr/m² uppsettir, klæðning 190 m.kr (COWI-tala óbreytt), frárennsli í grunni 600 m² uppbrot og 260 lengdarmetrar, afmengun 85 m.kr, og hvort 12% ófyrirséð dugi þegar allt er áætlað en ekki tilboð (ÍF-venja 15% á áætlaða liði).</div>
 <p class="src">Heimildir í áætluninni: COWI 2024 og 2025 fyrir magntölur og forgangsatriði; reynslutölur ÍF af sambærilegri umbreytingu 2026; eldri áætlun ÍF um 78 herbergja hótel (2018) uppreiknuð með byggingarvísitölu 137,0 → 206,9; áætlun ÍF um nýbyggingu (2025) uppreiknuð með byggingarvísitölu 200,4 → 206,9.</p></div>
 </div></section>
-<section id="s5"><div class="k">5 · B</div><h2>Tekjur hótelsins</h2><p class="lead">Þrír gæðaflokkar. ADR er meðalverð á selda nótt yfir árið án 11% VSK. Tekjur miðaðar við 123 herbergi.</p>
+<section id="s5"><div class="k">5 · B</div><h2>Tekjur hótelsins</h2><p class="lead">Þrír gæðaflokkar. ADR er meðalverð á selda nótt yfir árið án 11% VSK. Tekjur miðaðar við 122 herbergi.</p>
 <div class="grid g2">
 <div>{tbl(['Fl.', 'ADR án VSK', 'Nýting', 'RevPAR', 'Herbergistekjur', 'F&B og annað', 'Tekjur alls', 'm.kr/herb'], pl_rows)}
 {tbl(['Flokkur', 'Lýsing', 'Viðmið'], [
@@ -199,7 +199,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="callout">Tekjur á herbergi eru 12,6 / 11,6 / 17,7 / 24,7 m.kr eftir flokki (N/A/B/C). Íslandshótel eru á 8,5 að meðaltali yfir allt landið. Flokkur C tvöfaldar tekjurnar á herbergi en fækkar herbergjum um fimmtung og kallar á vörumerki, F&B-rekstur og þjónustustig sem þarf að staðfesta með rekstraraðila.</div></div>
 </div></section>
 
-<section id="s6"><div class="k">6 · C</div><h2>Leiga sem hótelið þolir</h2><p class="lead">Byggt upp eftir USALI-uppgjörsstaðli hótela og borið saman við íslenska samninga. 123 herbergi, m.kr á ári.</p>
+<section id="s6"><div class="k">6 · C</div><h2>Leiga sem hótelið þolir</h2><p class="lead">Byggt upp eftir USALI-uppgjörsstaðli hótela og borið saman við íslenska samninga. 122 herbergi, m.kr á ári.</p>
 {tbl(['Fl.', 'Tekjur', 'Deildarframlegð', 'GOP', 'FF&E 4%', 'Leiga USALI (65% af EBITDAR)', 'Leiga ODDSSON (max 30% herb. / 25% alls)', 'Leiga Næslands (35% herb.)', 'Rekstraraðili eftir leigu (USALI / ODDSSON)', 'Leiga á herbergi, m.kr (USALI / ODDSSON)'], usali_rows)}
 <p class="src">Forsendur USALI: herbergjadeild kostar 32% (laun 18%, sölukostnaður og OTA 8%, þvottur og vörur 6%); veitingadeild 75%; annað 50%; ódeilt 19% (stjórnun 7, markaðsmál 4, UT 1,5, viðhald 3,5, orka 3); enginn stjórnunarsamningur (eigin rekstur); FF&E-sjóður 4%. Fastur leigusamningur = 65% af EBITDAR eftir FF&E til leigusala (alþjóðleg venja 60–70%).</p>
 <div class="grid g2" style="margin-top:14px">
@@ -255,7 +255,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="callout hl" id="b_naes"><b>Forsendur Næslands 27.9.2026 í sömu keðju.</b> Leiguþol 460 m.kr + Kolaportið 45,6 = 505,6 m.kr á ári ber kaupverð upp á <b>−681 m.kr</b> hjá langtímaeiganda (D 10%, 6,0%) og <b>−1.421 m.kr</b> hjá þróunaraðila (D 20%, 6,75%). Sama leiguþol með jarðhæðina alla á markaðsleigu (salur ×3 + blokkir 5.000 kr/m²/mán = 280 m.kr á ári) ber <b>+1.085 m.kr</b> hjá langtímaeiganda og um núll hjá þróunaraðila.</div>
 <div class="grid g3" style="margin-top:10px"><div class="card"><h3>Íslandshótel 2023</h3><div class="big">25,4 <small>þ.kr án VSK</small></div><p>Öll keðjan, nýting 68%</p></div><div class="card"><h3>Upper upscale, B</h3><div class="big">48 <small>þ.kr án VSK</small></div><p>Konsulat/Parliament-flokkur, €330</p></div><div class="card"><h3>Lúxus, C</h3><div class="big">65 <small>þ.kr án VSK</small></div><p>EDITION-flokkur, €450</p></div></div>
 </div></div></section>
-<section id="s9"><div class="k">9</div><h2>Sviðsmyndir</h2><p class="lead">123 herbergi, B- og C-flokkur, leiga eftir USALI (65%) eða ODDSSON (25%), kostnaður skv. áætlun ÍF v1.1 eða 20% undir, Kolaport eða matarhöll, þróunaraðili (D 20%, 6,75%) eða langtímaeigandi (D 10%, 6,0%). m.kr án lauss búnaðar.</p>
+<section id="s9"><div class="k">9</div><h2>Sviðsmyndir</h2><p class="lead">122 herbergi, N-, B- og C-flokkur, leiga eftir USALI (65%) eða ODDSSON (25%), kostnaður skv. áætlun ÍF v1.1 eða 20% undir, Kolaport eða matarhöll, þróunaraðili (D 20%, 6,75%) eða langtímaeigandi (D 10%, 6,0%). m.kr án lauss búnaðar.</p>
 {tbl(head_scen, sel)}
 <div class="callout"><b>Lesturinn.</b> Sviðsmyndirnar eru reiknaðar með áætlun ÍF v1.1 sem grunn (án lauss búnaðar). Kostnaðarstig 100% er áætlunin; 80% er 20% undir henni. Bakreikningurinn á glæru 8b er þægilegri leið að sömu niðurstöðu: hann sýnir hvaða verð á nótt hvert kaupverð krefst.</div></section>
 
@@ -284,7 +284,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <li><b>Langtímaeigandi:</b> þreifa á fasteignafélagi eða lífeyrissjóði um framvirk kaup.</li>
 <li><b>Tilboðsbréf og skilmálar:</b> drög þegar A og C hafa verið fest.</li></ul></div>
 <div><ul class="tight" style="font-size:12px">
-<li>Söluyfirlit TORG 31.8.2026; fasteigna- og veðbandayfirlit HMS júlí 2026.</li><li>COWI: ástandsskýrsla 3210316-000-CRP-0003 (16.10.2024) með burðarþolsminnisblaði 6.9.2024; innivistarskoðun A290951-001 (20.8.2025).</li><li>Aðaluppdrættir BN045618 (2013, 1:200) og BN048223 (2014), skjalasafn Reykjavíkur.</li><li>Umsögn skipulagsfulltrúa 4.4.2024; minnisblað ríkis og borgar um LHÍ 20.4.2022; Stjórnarráðið 11.9.2024.</li><li>Kostnaðaráætlun ÍF fullbúið hótel v1.0 (23.9.2026) og reynslutölur ÍF af sambærilegum verkefnum (trúnaðarmál, ekki birtar).</li><li>Íslandshótel hf.: útgefandalýsing 13.5.2024, fjárfestakynning maí 2024, ársreikningur 2024; Reitir tilkynning 29.4.2026.</li><li>ÍF/RR hótel: leigusamningur ODDSSON 2020 með viðauka 2021; áætlun 06/2020.</li><li>Flóra/ÍF: Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025, BBR módel v1 2026.</li><li>KPMG: Hótelgeirinn á Íslandi 2014 (Ferðamálastofa). Hagstofa Íslands: gistinætur 2025–26. HVS: hotel lease structures.</li><li>Fjármögnunar- og ávöxtunarforsendur ÍF (2026) og greining á ávöxtunarkröfu fasteignafélaga 19.8.2026.</li><li>Gögn Næslands 22.9.2026: kynning, stofnkostnaðar- og rekstraráætlun, samantekt COWI-flagga.</li></ul></div></div>
+<li>Söluyfirlit TORG 31.8.2026; fasteigna- og veðbandayfirlit HMS júlí 2026.</li><li>COWI: ástandsskýrsla 3210316-000-CRP-0003 (16.10.2024) með burðarþolsminnisblaði 6.9.2024; innivistarskoðun A290951-001 (20.8.2025).</li><li>Aðaluppdrættir BN045618 (2013, 1:200) og BN048223 (2014), skjalasafn Reykjavíkur.</li><li>Umsögn skipulagsfulltrúa 4.4.2024; minnisblað ríkis og borgar um LHÍ 20.4.2022; Stjórnarráðið 11.9.2024.</li><li>Kostnaðaráætlun ÍF fullbúið hótel v1.1 (28.9.2026) og reynslutölur ÍF af sambærilegum verkefnum (trúnaðarmál, ekki birtar).</li><li>Íslandshótel hf.: útgefandalýsing 13.5.2024, fjárfestakynning maí 2024, ársreikningur 2024; Reitir tilkynning 29.4.2026.</li><li>ÍF/RR hótel: leigusamningur ODDSSON 2020 með viðauka 2021; áætlun 06/2020.</li><li>Flóra/ÍF: Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025, BBR módel v1 2026.</li><li>KPMG: Hótelgeirinn á Íslandi 2014 (Ferðamálastofa). Hagstofa Íslands: gistinætur 2025–26. HVS: hotel lease structures.</li><li>Fjármögnunar- og ávöxtunarforsendur ÍF (2026) og greining á ávöxtunarkröfu fasteignafélaga 19.8.2026.</li><li>Gögn Næslands 22.9.2026: kynning, stofnkostnaðar- og rekstraráætlun, samantekt COWI-flagga.</li></ul></div></div>
 <p class="src" style="margin-top:20px">Líkan: model.py / model2.py / model3.py og Excel v0.1 í Claude Projects/Tollhúsið Næsland/. Þessi síða er drög 1, 22.9.2026, og verður uppfærð þegar A og C hafa verið fest.</p></section>
 </main>
 <script>
@@ -362,7 +362,7 @@ if MODE == 'naesland':
     HTML = HTML.replace('<section id="s9">', KYN_SLIDE + '<section id="s9">', 1)
     HTML = HTML.replace('<a href="#s8b">Bakreikningur · verð á nótt</a>', '<a href="#s8b">Bakreikningur · verð á nótt</a><a href="#s8c" style="color:var(--gold);font-weight:700">★ Möguleg tilboðssviðsmynd</a>')
     HTML = HTML.replace('.hero{{', '.hl{{border:2px solid var(--gold);background:#FFFBEA}}.hero{{') if '.hl{{' not in HTML else HTML
-    HTML = HTML.replace('.hero{', '.hl{border:2px solid var(--gold);background:#FFFBEA}.hero{', 1)
+    HTML = HTML.replace('.hero{', '.hl{border:2px solid var(--gold);background:#FFFBEA}.nw td:first-child,.nw th:first-child{white-space:nowrap}.hero{', 1)
     for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
         n = len(_re.findall(w, _re.sub(r'data:image[^"]*', '', HTML)))
         if n: print(f'  [kynning] VIÐVÖRUN: "{w}" kemur fyrir {n}x')

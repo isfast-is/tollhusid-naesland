@@ -385,7 +385,7 @@ for t in [
     'Kolaportssalurinn (2.410 m²) er utan áætlunar að öllu leyti nema tveimur COWI-viðgerðarlínum í kafla 7 (þak, gaflar, hringhurð), sem eru sérmerktar og má strika út.',
     'Kr/m² eru reiknuð á hótelhlutann einan, 7.742 m² (þ.m.t. 1.082 m² útleigurými í skel á jarðhæð og 885 m² tæknirými). Það er sá grunnur sem ÍF notar venjulega.',
     'Herbergjatengdir liðir eru með magn = herbergjafjöldi og einingarverð á herbergi, svo talan á herbergi sést beint. Húsbundnir liðir (gluggar, klæðning, frárennsli, kerfi, aðstaða) dreifast á herbergin. v1.1 (28.9.2026): 122 herbergi skv. skipan Næslands (86 Standard 19,6 m², 35 Superior 29,4 m², 1 svíta), lobby á 2. hæð, jarðhæðarblokkir í skel til útleigu.',
-    'Heimildir eru við hverja línu í kaflablöðunum: COWI 2024/2025 fyrir magntölur og forgangsatriði, Hyatt L176 EAC 07/2026 fyrir raunverð á fullbúinni hótelhæð, Grensásvegur 2018 fyrir okkar eigin einingarverð (verðbætt ×1,45), Hamranes fyrir nýbyggingarviðmið, Næsland-skjalið til samanburðar. Þessar tilvísanir eru hreinsaðar út áður en nokkuð fer út úr húsi.',
+    'Heimildir eru við hverja línu í kaflablöðunum: COWI 2024/2025 fyrir magntölur og forgangsatriði, Hyatt L176 EAC 07/2026 fyrir raunverð á fullbúinni hótelhæð, Grensásvegur 2018 fyrir okkar eigin einingarverð (verðbætt með byggingarvísitölu ×1,51), Hamranes fyrir nýbyggingarviðmið, Næsland-skjalið til samanburðar. Þessar tilvísanir eru hreinsaðar út áður en nokkuð fer út úr húsi.',
 ]:
     ws.cell(r, 1, t).alignment = Alignment(wrap_text=True); ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=10); ws.row_dimensions[r].height = 30; r += 1
 ws.freeze_panes = 'A12'
