@@ -329,18 +329,18 @@ if MODE == 'naesland':
         ('Drög 3 · 28.9.2026 · líkan v0.5', 'Kynningarútgáfa · 29.9.2026'),
         ("localStorage.removeItem('tollhus_pass')", "localStorage.removeItem('tollhus_kyn_pass')"),
         ('ODDSSON-samningur ÍF 25% (30% af herbergistekjum)', 'veltuleiga 25% af heildartekjum (30% af herbergistekjum)'),
-        ('ODDSSON – leigusamningur ÍF/RR hótel 2020 (77 herb., Grensásvegur 16A)', 'Veltutengdur leigusamningur um 77 herbergja hótel í Reykjavík (2020)'),
+        ('ODDSSON – leigusamningur ÍF/RR hótel 2020 (77 herb., Grensásvegur 16A)', 'Veltutengdur leigusamningur um hótel í Reykjavík'),
         ('isfast Drive: Grensásvegur 16a/Leigusamningar/RR hótel', 'Gögn ÍF'),
-        ('Flóra – Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025 (120 herb.)', 'Rekstraráætlun rekstraraðila fyrir nýtt 120 herbergja hótel á Suðurlandi (2025)'),
+        ('Flóra – Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025 (120 herb.)', 'Rekstraráætlun rekstraraðila fyrir nýtt hótel utan höfuðborgarsvæðisins'),
         ('isfast Drive: Ölfus/BBR/Black Beach Resort Collaboration', 'Gögn ÍF'),
-        ('BBR módel v1 (ÍF, apríl 2026)', 'Líkan ÍF fyrir nýtt hótelverkefni (2026)'),
+        ('BBR módel v1 (ÍF, apríl 2026)', 'Líkan ÍF fyrir nýtt hótelverkefni'),
         ('isfast Drive: Ölfus/BBR/2026 Verkefnavinna', 'Gögn ÍF'),
         ('Leiga ODDSSON (max 30% herb. / 25% alls)', 'Leiga veltusamnings (max 30% herb. / 25% alls)'),
-        ('efri mörkin úr samningi ÍF sjálfs við RR hótel um ODDSSON (30% af herbergistekjum eða 25% af heildartekjum). Flóra gerði ráð fyrir 30% í Þorlákshöfn og skildi rekstraraðilann eftir með 2–4% EBITDA, sem er ekki sjálfbært.', 'efri mörkin úr veltutengdum leigusamningi um 77 herbergja hótel í Reykjavík (30% af herbergistekjum eða 25% af heildartekjum). Í nýlegri rekstraráætlun fyrir nýtt 120 herbergja hótel var gert ráð fyrir 30% og rekstraraðilinn skilinn eftir með 2–4% EBITDA, sem er ekki sjálfbært.'),
+        ('efri mörkin úr samningi ÍF sjálfs við RR hótel um ODDSSON (30% af herbergistekjum eða 25% af heildartekjum). Flóra gerði ráð fyrir 30% í Þorlákshöfn og skildi rekstraraðilann eftir með 2–4% EBITDA, sem er ekki sjálfbært.', 'efri mörkin úr veltutengdum leigusamningi um hótel í Reykjavík (30% af herbergistekjum eða 25% af heildartekjum). Í nýlegri rekstraráætlun fyrir nýtt hótel var gert ráð fyrir 30% og rekstraraðilinn skilinn eftir með 2–4% EBITDA, sem er ekki sjálfbært.'),
         ('Hreinn veltusamningur eins og ODDSSON er ekki bankahæfur', 'Hreinn veltusamningur er ekki bankahæfur'),
-        ('ODDSSON 2021 (ÍF, 77 herb.)', '77 herbergja hótel í Reykjavík, áætlun 2021'),
+        ('ODDSSON 2021 (ÍF, 77 herb.)', 'Hótel í Reykjavík, áætlun rekstraraðila'),
         ('Áætlun 06/2020, isfast Drive', 'Gögn ÍF'),
-        ('Black Dunes Þorlákshöfn (Flóra, 120 herb.)', 'Nýtt 120 herbergja hótel á Suðurlandi, áætlun rekstraraðila'),
+        ('Black Dunes Þorlákshöfn (Flóra, 120 herb.)', 'Nýtt hótel utan höfuðborgarsvæðisins, áætlun rekstraraðila'),
         ('Rekstraráætlun 17.3.2025, isfast Drive', 'Gögn ÍF'),
         ('Rekstrar- og söluáætlun draft 1', 'Rekstrar- og söluáætlun Næslands'),
         ('ODDSSON-leiga 25%', 'leiga 25%'),
@@ -354,6 +354,8 @@ if MODE == 'naesland':
         ('Rýnd af GT og Sveini 25.9.2026.', 'Rýnd innanhúss hjá ÍF 25.9.2026.'),
         ('rýnd 25.9. Það eru', 'rýnd innanhúss. Það eru'),
         ('Walk-away fyrirvari', 'Fyrirvari'), ('walk-away fyrirvari', 'fyrirvari'), ('walk-away', 'fyrirvara'),
+        ('Heimildir í áætluninni: COWI 2024 og 2025 fyrir magntölur og forgangsatriði; reynslutölur ÍF af sambærilegri umbreytingu 2026; eldri áætlun ÍF um 78 herbergja hótel (2018) uppreiknuð með byggingarvísitölu 137,0 → 206,9; áætlun ÍF um nýbyggingu (2025) uppreiknuð með byggingarvísitölu 200,4 → 206,9.', 'Heimildir í áætluninni: COWI 2024 og 2025 fyrir magntölur og forgangsatriði; að öðru leyti einingarverð og reynslutölur ÍF úr eigin hótelverkefnum, uppreiknað með byggingarvísitölu á verðlag september 2026.'),
+        ('Sömu kjör og ÍF hefur í sambærilegu verkefni í dag.', 'Kjör sem bjóðast sambærilegum verkefnum í dag.'),
         ('leiga eftir USALI (65%) eða ODDSSON (25%)', 'leiga eftir USALI (65%) eða veltuleiga 25% af heildartekjum'),
         ('Næsland-hópurinn, ásamt Íslandshótelum, leitar til ÍF sem þróunaraðila.', 'Næsland-hópurinn leitaði til ÍF um mat á verkefninu.'),
         (' ÍF fær þróunarþóknun og árangurshlut.', ''),
@@ -368,7 +370,7 @@ if MODE == 'naesland':
     HTML = HTML.replace('<a href="#s8b">Bakreikningur · verð á nótt</a>', '<a href="#s8b">Bakreikningur · verð á nótt</a><a href="#s8c" style="color:var(--gold);font-weight:700">★ Möguleg tilboðssviðsmynd</a>')
     HTML = HTML.replace('.hero{{', '.hl{{border:2px solid var(--gold);background:#FFFBEA}}.hero{{') if '.hl{{' not in HTML else HTML
     HTML = HTML.replace('.hero{', '.hl{border:2px solid var(--gold);background:#FFFBEA}.nw td:first-child,.nw th:first-child{white-space:nowrap}.hero{', 1)
-    for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'þóknun', 'Þóknun', 'eignarhlut', 'verkefnastjóri', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
+    for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'herbergja hótel', '137,0', '200,4', 'Suðurland', 'umbreytingu 2026', 'þóknun', 'Þóknun', 'eignarhlut', 'verkefnastjóri', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
         n = len(_re.findall(w, _re.sub(r'data:image[^"]*', '', HTML)))
         if n: print(f'  [kynning] VIÐVÖRUN: "{w}" kemur fyrir {n}x')
     out = os.path.join(HERE, 'app_kynning.html')
