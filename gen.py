@@ -132,7 +132,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="grid g3">
 <div class="card"><h3>Það sem er sterkt</h3><ul class="tight"><li>Burðarvirki og steypa í góðu lagi, ein hæð til viðbótar möguleg burðarþolslega (COWI 6.9.2024)</li><li>Staðsetning, kennileiti, mósaík Gerðar Helgadóttur, torgið</li><li>Kolaportið og þakflötur 3. hæðar sem sölutæki gagnvart ríki og borg</li><li>Hæðarhæð 3,2–3,45 m og 15,5 m djúp álma hentar tvíhliða hótelgangi</li></ul></div>
 <div class="card"><h3>Það sem er veikt</h3><ul class="tight"><li>Hótel ekki heimilt í deiliskipulagi Kvosar; lóðarleigusamningur útrunninn 2017</li><li>Asbest 550–600 m², PCB, mygla á öllum hæðum nema 5., frárennsli í grunni ónýtt, 1.600 m² gluggaveggir</li><li>2. hæð er einhliða (norðurhlið inni í Kolaportssal); 63 m² brúttó á herbergi, nýbygging er nær 55–60; 86 af 122 herbergjum eru 2,8 m breið</li><li>Fasteignagjöld 93 m.kr á ári frá kaupdegi; forkaupsréttur og samþykki hafnarstjórnar</li></ul></div>
-<div class="card"><h3>Það sem ræður úrslitum</h3><ul class="tight"><li><b>Kostnaðarprófið:</b> áætlun v1.0 er rýnd, en gluggar, klæðning, frárennsli og afmengun eru mat þar til tilboð liggja fyrir.</li><li><b>Jarðhæðarprófið:</b> Kolaportið greiðir 45,6 m.kr fyrir 2.410 m² og blokkirnar við Tryggvagötu, 1.082 m², losna í skipan Næslands. Öll jarðhæðin á markaðsleigu væri 200–250 m.kr og ræður úrslitum.</li><li><b>Eigendaprófið:</b> D 20% á 6,75% eða langtímaeigandi á D 10% og 6,0% munar 1–2 ma.kr.</li><li><b>Rekstraraðilinn:</b> hver skrifar undir 25 ára leigu og með hvaða ábyrgð.</li></ul></div>
+<div class="card"><h3>Það sem ræður úrslitum</h3><ul class="tight"><li><b>Kostnaðarprófið:</b> áætlun v1.1 er rýnd, en gluggar, klæðning, frárennsli og afmengun eru mat þar til tilboð liggja fyrir.</li><li><b>Jarðhæðarprófið:</b> Kolaportið greiðir 45,6 m.kr fyrir 2.410 m² og blokkirnar við Tryggvagötu, 1.082 m², losna í skipan Næslands. Öll jarðhæðin á markaðsleigu væri 200–250 m.kr og ræður úrslitum.</li><li><b>Eigendaprófið:</b> D 20% á 6,75% eða langtímaeigandi á D 10% og 6,0% munar 1–2 ma.kr.</li><li><b>Rekstraraðilinn:</b> hver skrifar undir 25 ára leigu og með hvaða ábyrgð.</li></ul></div>
 </div></section>
 
 <section id="s2"><div class="k">2</div><h2>Eignin og áhætturnar</h2><p class="lead">Söluyfirlit TORG 31.8.2026, fasteigna- og veðbandayfirlit HMS, umsögn skipulagsfulltrúa 4.4.2024, COWI 2024 og 2025.</p>
@@ -169,7 +169,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="grid g2" style="margin-top:8px"><div>{tbl(['Skipan', '5. hæð', '4. hæð', '3. hæð', '2. hæð', 'Alls'], keys_rows)}<p class="src">Efsta línan er skipan Næslands 27.9.2026 af DWG-teikningum (Standard 2,8 × 7,0 m, Superior 4,2 × 7,0 m, hliðarhús 5,5 × 4,2 m; lobby, lounge og kaffihús á 2. hæð, veitingastaður og bar á 3. hæð). Hinar línurnar eru talning ÍF af 1:200 uppdráttum. Húsið ber um 120 herbergi hvernig sem á er litið.</p></div>
 <figure><img src="{b64('snid.jpg')}" alt="Snið"><figcaption><b>Snið A-A og B-B.</b> Gólfkótar 3,90 / 7,10 / 10,40 / 13,60 / 17,05. Þakplata 3. hæðar og 5. hæðar þola eina hæð til viðbótar (COWI 6.9.2024).</figcaption></figure></div></section>
 
-<section id="s4"><div class="k">4 · A</div><h2>Umbreytingarkostnaður – áætlun ÍF v1.0</h2><p class="lead">Kostnaðaráætlun fullbúins hótels í sniði ÍF, kaflar 0–9 með magni, einingarverðum og heimild við hverja línu. Rýnd af GT og Sveini 25.9.2026. Allt án VSK á verðlagi september 2026. Kolaportssalurinn, 2.410 m², er utan áætlunar.</p>
+<section id="s4"><div class="k">4 · A</div><h2>Umbreytingarkostnaður – áætlun ÍF v1.1</h2><p class="lead">Kostnaðaráætlun fullbúins hótels í sniði ÍF, kaflar 0–9 með magni, einingarverðum og heimild við hverja línu. Rýnd af GT og Sveini 25.9.2026. Allt án VSK á verðlagi september 2026. Kolaportssalurinn, 2.410 m², er utan áætlunar.</p>
 <div class="grid g2">
 <div>{tbl(['Kafli', 'þ.kr/m²', 'm.kr', 'm.kr/herb', 'Næsland m.kr'], [[k, n1(a) if a else '', n0(b/1e6) if b else '', n1(c) if c else '', (n0(d/1e6) if d else '–')] for k, a, b, c, d in KOST])}
 <p class="src">Grunnur kr/m²: hótelhluti 7.742 m² (6.857 m² gestarými + 885 m² tæknirými), 123 herbergi, 63 m² brúttó á herbergi. Næsland-dálkur: vinnuskjal Næslands án VSK, 100 herbergi.</p></div>
@@ -255,9 +255,9 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="callout hl" id="b_naes"><b>Forsendur Næslands 27.9.2026 í sömu keðju.</b> Leiguþol 460 m.kr + Kolaportið 45,6 = 505,6 m.kr á ári ber kaupverð upp á <b>−681 m.kr</b> hjá langtímaeiganda (D 10%, 6,0%) og <b>−1.421 m.kr</b> hjá þróunaraðila (D 20%, 6,75%). Sama leiguþol með jarðhæðina alla á markaðsleigu (salur ×3 + blokkir 5.000 kr/m²/mán = 280 m.kr á ári) ber <b>+1.085 m.kr</b> hjá langtímaeiganda og um núll hjá þróunaraðila.</div>
 <div class="grid g3" style="margin-top:10px"><div class="card"><h3>Íslandshótel 2023</h3><div class="big">25,4 <small>þ.kr án VSK</small></div><p>Öll keðjan, nýting 68%</p></div><div class="card"><h3>Upper upscale, B</h3><div class="big">48 <small>þ.kr án VSK</small></div><p>Konsulat/Parliament-flokkur, €330</p></div><div class="card"><h3>Lúxus, C</h3><div class="big">65 <small>þ.kr án VSK</small></div><p>EDITION-flokkur, €450</p></div></div>
 </div></div></section>
-<section id="s9"><div class="k">9</div><h2>Sviðsmyndir</h2><p class="lead">123 herbergi, B- og C-flokkur, leiga eftir USALI (65%) eða ODDSSON (25%), kostnaður skv. áætlun ÍF v1.0 eða 20% undir, Kolaport eða matarhöll, þróunaraðili (D 20%, 6,75%) eða langtímaeigandi (D 10%, 6,0%). m.kr án lauss búnaðar.</p>
+<section id="s9"><div class="k">9</div><h2>Sviðsmyndir</h2><p class="lead">123 herbergi, B- og C-flokkur, leiga eftir USALI (65%) eða ODDSSON (25%), kostnaður skv. áætlun ÍF v1.1 eða 20% undir, Kolaport eða matarhöll, þróunaraðili (D 20%, 6,75%) eða langtímaeigandi (D 10%, 6,0%). m.kr án lauss búnaðar.</p>
 {tbl(head_scen, sel)}
-<div class="callout"><b>Lesturinn.</b> Sviðsmyndirnar eru reiknaðar með áætlun ÍF v1.0 sem grunn (án lauss búnaðar). Kostnaðarstig 100% er áætlunin; 80% er 20% undir henni. Bakreikningurinn á glæru 8b er þægilegri leið að sömu niðurstöðu: hann sýnir hvaða verð á nótt hvert kaupverð krefst.</div></section>
+<div class="callout"><b>Lesturinn.</b> Sviðsmyndirnar eru reiknaðar með áætlun ÍF v1.1 sem grunn (án lauss búnaðar). Kostnaðarstig 100% er áætlunin; 80% er 20% undir henni. Bakreikningurinn á glæru 8b er þægilegri leið að sömu niðurstöðu: hann sýnir hvaða verð á nótt hvert kaupverð krefst.</div></section>
 
 <section id="s10"><div class="k">10</div><h2>Samkeppni og tilboðsform</h2>
 <div class="grid g2">
@@ -271,14 +271,14 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div><h3 style="margin:0 0 8px;color:var(--navy)">Tilboðsform sem GT hefur ákveðið</h3><ul class="tight">
 <li>Eitt verð, afleitt af A–D, ekki bundið neinni fyrirframtölu.</li><li>Walk-away fyrirvari um deiliskipulag: hótel auk tilgreinds viðbótarbyggingarmagns; gangi breytingin ekki í gegn fellur samningurinn niður.</li><li>Fyrirvari um fjármögnun og um nýjan lóðarleigusamning við Reykjavíkurborg með skilgreindum lágmarksskilmálum.</li><li>Þróunarfélag ÍF og Næsland-hópsins, ÍF þróunaraðili og verkefnastjóri með þóknun sem eignarhlut; Íslandshótel hugsanlega í félaginu.</li><li>Yfirlýsing um Kolaportið og opinn þakgarð sem sölutæki gagnvart ríki og borg.</li></ul>
 <h3 style="margin:16px 0 8px;color:var(--navy)">Hvað þarf að vera satt fyrir jákvætt verð</h3><ul class="tight">
-<li>Umbreyting á eða undir áætlun ÍF v1.0, staðfest með verktakatilboðum í COWI-liðina.</li><li>Rekstraraðili sem skrifar undir 25 ára samning á 25% af tekjum með grunnleigu og móðurfélagsábyrgð.</li><li>Jarðhæðin á markaðsleigu, með borginni, ekki gegn henni.</li><li>Langtímaeigandi sem kaupir fullbúna eign á 6,0% kröfu, samið fyrirfram.</li></ul></div>
+<li>Umbreyting á eða undir áætlun ÍF v1.1, staðfest með verktakatilboðum í COWI-liðina.</li><li>Rekstraraðili sem skrifar undir 25 ára samning á 25% af tekjum með grunnleigu og móðurfélagsábyrgð.</li><li>Jarðhæðin á markaðsleigu, með borginni, ekki gegn henni.</li><li>Langtímaeigandi sem kaupir fullbúna eign á 6,0% kröfu, samið fyrirfram.</li></ul></div>
 </div></section>
 
 <section id="s11"><div class="k">11</div><h2>Næstu skref og heimildir</h2>
 <div class="grid g2"><div><ul class="tight">
 <li><b>Fundur með Næslandi:</b> sýna bilið milli þess sem hótelið stendur undir og þess sem ríkið ætlast til; fá hlutverk Íslandshótela skjalfest.</li>
 <li><b>Íslandshótel:</b> spyrja beint um verðflokk, leiguhlutfall og form samnings.</li>
-<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun v1.0.</li>
+<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun v1.1.</li>
 <li><b>Skipulag:</b> Kvosardeiliskipulag með 2015-breytingunni (hlutfall gististaða) og afstaða borgarinnar til viðbótar ofan á húsið.</li>
 <li><b>TORG:</b> tilboðsreglur, Kolaportssamningur ríkis og borgar, lóðarleigusamningur 1967/1993, hvort fjárlagaheimild sé í gildi.</li>
 <li><b>Langtímaeigandi:</b> þreifa á fasteignafélagi eða lífeyrissjóði um framvirk kaup.</li>
@@ -346,7 +346,7 @@ if MODE == 'naesland':
         ('ODDSSON-leiga 25%', 'leiga 25%'),
         ('<h3 style="margin:0 0 8px;color:var(--navy)">Tilboðsform sem GT hefur ákveðið</h3>', '<h3 style="margin:0 0 8px;color:var(--navy)">Tilboðsform sem ÍF leggur til</h3>'),
         ('<li>Þróunarfélag ÍF og Næsland-hópsins, ÍF þróunaraðili og verkefnastjóri með þóknun sem eignarhlut; Íslandshótel hugsanlega í félaginu.</li>', '<li>Þróunarfélag Næslands og ÍF, ÍF þróunaraðili og verkefnastjóri; Íslandshótel hugsanlega í félaginu.</li>'),
-        ('<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun v1.0.</li>', '<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun ÍF.</li>'),
+        ('<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun v1.1.</li>', '<li><b>Kostnaðarpróf:</b> verktakatilboð í frárennsli, glugga, klæðningu og asbest til að festa stærstu matsliðina í áætlun ÍF.</li>'),
         ('<li>ÍF/RR hótel: leigusamningur ODDSSON 2020 með viðauka 2021; áætlun 06/2020.</li>', '<li>Leigusamningar og rekstraráætlanir hótela sem ÍF þekkir (trúnaðarmál, ekki birt).</li>'),
         ('<li>Flóra/ÍF: Black Dunes Þorlákshöfn rekstraráætlun 17.3.2025, BBR módel v1 2026.</li>', ''),
         ('Líkan: model.py / model2.py / model3.py og Excel v0.1 í Claude Projects/Tollhúsið Næsland/. Þessi síða er drög 1, 22.9.2026, og verður uppfærð þegar A og C hafa verið fest.', 'Kynningarútgáfa fyrir Næsland, 29.9.2026. Líkön og áætlanir ÍF liggja að baki og eru ekki birt hér í heild.'),
