@@ -12,7 +12,7 @@ YEL = PatternFill('solid', fgColor='FFFF00'); GREY = PatternFill('solid', fgColo
 NUM = '#,##0;(#,##0);-'; NUM1 = '#,##0.0;(#,##0.0);-'; PCT = '0.0%'; PCT2 = '0.00%'
 wb = Workbook(); ws = wb.active; ws.title = 'Bakreikningur'
 for i, w in enumerate([58, 16, 12, 80], 1): ws.column_dimensions[L(i)].width = w
-ws['A1'] = 'Tollhúsið – Bakreikningur: hvað þarf herbergið að kosta á nótt fyrir gefið tilboðsverð?'; ws['A1'].font = H1
+ws['A1'] = 'Tollhúsið – Bakreikningur v1.1 (28.9.2026): hvað þarf herbergið að kosta á nótt fyrir gefið tilboðsverð?'; ws['A1'].font = H1
 ws['A2'] = 'Gular reitir eru sleðar. m.kr án VSK á verðlagi 2026. Keðjan: verð → heildarkostnaður → verðmæti sem fjárfestar þurfa (× (1+D)) → NOI (× krafa) → leiga → tekjur → verð á nótt.'; ws['A2'].font = SRC
 R = {}; r = 4
 def sec(t):
@@ -30,21 +30,23 @@ sec('1. Sleðar')
 inp('fmat', 'Fasteignamat 2026', 4725.5, 'm.kr', 'Fasteignaskrá F2000241 (2027: 4.914,9)')
 inp('pct', 'Tilboðsverð sem hlutfall af fasteignamati', 0.42, '%', '0–100%. 42% ≈ 2.000 m.kr', PCT, True)
 fml('price', 'Tilboðsverð', f'={R["fmat"]}*{R["pct"]}', 'm.kr', '', NUM, True)
-inp('keys', 'Herbergi', 123, 'stk', 'Talning af grunnmyndum: 106 (4,5 m) / 123 (3,9 m)', '0', True)
-inp('occ', 'Nýting á ársgrundvelli', 0.75, '%', 'Höfuðborgarsvæðið 74,7% 2025 (Hagstofa); Íslandshótel 68% 2023', PCT, True)
-inp('fb', 'Veitingar, bar og aðrar tekjur, hlutfall af herbergistekjum', 0.40, '%', 'B-flokkur 35% + 5%; Íslandshótel: veitingatekjur ~30% af gistitekjum', PCT, True)
+inp('keys', 'Herbergi', 122, 'stk', 'Skipan Næslands 27.9.2026 af DWG-teikningum: 86 Standard, 35 Superior, 1 svíta', '0', True)
+inp('occ', 'Nýting á ársgrundvelli', 0.736, '%', 'Næsland 73,6%; höfuðborgarsvæðið 74,7% 2025 (Hagstofa); Íslandshótel 68% 2023', PCT, True)
+inp('fb', 'Veitingar, bar og aðrar tekjur, hlutfall af herbergistekjum', 0.20, '%', 'Þétt hönnunarhótel með kaffihúsi og bar 20–25%; Næsland reiknar 0; Íslandshótel ~30%', PCT, True)
 inp('C', 'C · leiga hótels sem hlutfall af heildartekjum', 0.25, '%', 'ODDSSON-samningur ÍF 2020: max(30% herb., 25% alls); USALI 20–24%', PCT, True)
 inp('D', 'D · arðsemiskrafa fjárfesta, álag á heildarkostnað', 0.20, '%', '20% ≈ 12–15% IRR þróunaraðila; 10% = langtímaeigandi', PCT, True)
 inp('y', 'Ávöxtunarkrafa kaupanda á NOI (endurfjármögnun/sala)', 0.0675, '%', 'Hótelleiga 6,75%; langtímaeigandi 6,0%; ríkisleiga 5,7%', PCT2, True)
 inp('kola_m2', 'Kolaportssalur', 2409.6, 'm²', 'Fasteignaskrá 01-0105 + 01-0106', NUM1)
-inp('kola_now', 'Núverandi leiga Kolaports, kr/m²/mán', 1000, 'kr', 'GT: ~1.000 kr/m²/mán; auglýsing RVK 2025 til rekstraraðila 1.570 kr/m²/mán (3,78 m.kr/mán). Staðfesta með samningi ríkis og borgar frá TORG.', NUM, True)
-inp('kola_x', 'Margfaldari á Kolaportsleigu (×1 = óbreytt … ×4)', 1.0, 'x', 'Matarhöll/markaður á markaðsleigu ≈ ×3,5–5,5', '0.0', True)
-fml('kola', 'Leiga jarðhæðar á ári', f'={R["kola_m2"]}*{R["kola_now"]}*{R["kola_x"]}*12/1000000', 'm.kr', '', NUM1)
-inp('A0', 'A · hús fullbúið án lauss búnaðar (áætlun v1.0, 123 herb.)', 5483, 'm.kr', 'Kostnaðaráætlun fullbúið hótel v1.0 23.9.2026: framkvæmd 4.198 + ófyrirséð 12% + hönnun/stjórnun 781', NUM)
+inp('kola_now', 'Núverandi leiga Kolaportssalar, kr/m²/mán', 1570, 'kr', 'Næsland 27.9.2026: 3,8 m.kr/mán = 45,6 m.kr/ár; auglýsing RVK 2025 til rekstraraðila 3,78 m.kr/mán. Samningur ríkis og borgar óséður.', NUM, True)
+inp('kola_x', 'Margfaldari á leigu Kolaportssalar (×1 = óbreytt … ×4)', 1.0, 'x', 'Nýtt concept Næslands / matarhöll á markaðsleigu ≈ ×3–4', '0.0', True)
+inp('blk_m2', 'Jarðhæð: austur- og vesturblokk til útleigu í skel', 1081.9, 'm²', 'Skipan Næslands setur lobby á 2. hæð og losar blokkirnar (fasteignaskrá 01-0101, 01-0103, 01-0104)', NUM1)
+inp('blk_rate', 'Leiga jarðhæðarblokka, kr/m²/mán (0 = ekki leigðar)', 0, 'kr', 'Verslun/veitingar við Tryggvagötu 4.000–6.000 kr/m²/mán', NUM, True)
+fml('kola', 'Leiga jarðhæðar á ári (salur + blokkir)', f'=({R["kola_m2"]}*{R["kola_now"]}*{R["kola_x"]}+{R["blk_m2"]}*{R["blk_rate"]})*12/1000000', 'm.kr', '', NUM1)
+inp('A0', 'A · hús fullbúið án lauss búnaðar (áætlun v1.1, 122 herb., jarðhæð í skel)', 5457, 'm.kr', 'Kostnaðaráætlun fullbúið hótel v1.1 28.9.2026: framkvæmd 4.178 + ófyrirséð 12% + hönnun/stjórnun 778', NUM)
 inp('ffe', 'Laus búnaður (FF&E) – 0 = rekstraraðili greiðir, 1 = eigandi', 0, '0/1', 'Áætlun v1.0: 739 m.kr. Hamranes: laus búnaður ekki hluti tilboðs', '0', True)
-inp('ffe0', 'Laus búnaður alls (123 herb.)', 739, 'm.kr', 'Áætlun v1.0 kafli 9', NUM)
-inp('cf', 'Kostnaðarstig (1,0 = áætlun v1.0)', 1.0, 'x', '', '0.00', True)
-fml('A', 'A notað: (65% húsbundið + 35% herbergjabundið × herb/123) × kostnaðarstig + FF&E', f'=({R["A0"]}*0.65+{R["A0"]}*0.35*{R["keys"]}/123+{R["ffe"]}*{R["ffe0"]}*{R["keys"]}/123)*{R["cf"]}', 'm.kr', '', NUM, True)
+inp('ffe0', 'Laus búnaður alls (122 herb.)', 735, 'm.kr', 'Áætlun v1.1 kafli 9', NUM)
+inp('cf', 'Kostnaðarstig (1,0 = áætlun v1.1)', 1.0, 'x', '', '0.00', True)
+fml('A', 'A notað: (65% húsbundið + 35% herbergjabundið × herb/122) × kostnaðarstig + FF&E', f'=({R["A0"]}*0.65+{R["A0"]}*0.35*{R["keys"]}/122+{R["ffe"]}*{R["ffe0"]}*{R["keys"]}/122)*{R["cf"]}', 'm.kr', '', NUM, True)
 inp('eur', 'Gengi EUR/ISK', 145, 'kr', 'Seðlabankinn sept 2026 ~145', NUM)
 inp('vsk_g', 'VSK á gistingu', 0.11, '%', '', PCT)
 
@@ -68,7 +70,7 @@ fml('V', 'Verðmæti sem fjárfestar þurfa = heildarkostnaður × (1 + D)', f'=
 fml('noi', 'Nauðsynlegt NOI = verðmæti × krafa', f'={R["V"]}*{R["y"]}', 'm.kr/ár', '', NUM1, True)
 fml('fixed', 'Fastur eigandakostnaður (fasteignagjöld eftir endurmat, tryggingar 8,25, viðhaldssjóður 0,5% af A)', f'={R["fgj"]}*{R["fgj_up"]}+8.25+{R["A"]}*0.005', 'm.kr/ár')
 fml('leiga', 'Nauðsynlegar leigutekjur alls (NOI + fastur kostnaður, umsýsla 1%)', f'=({R["noi"]}+{R["fixed"]})/0.99', 'm.kr/ár', '', NUM1, True)
-fml('hrent', 'Þar af leiga hótels (alls − jarðhæð)', f'={R["leiga"]}-{R["kola"]}', 'm.kr/ár', '', NUM1, True)
+fml('hrent', 'Þar af leiga hótels (alls − jarðhæð)', f'={R["leiga"]}-{R["kola"]}', 'm.kr/ár', 'Næsland 27.9.2026: leiguþol 460 m.kr á ári', NUM1, True)
 fml('rev', 'Nauðsynlegar heildartekjur hótels = leiga / C', f'={R["hrent"]}/{R["C"]}', 'm.kr/ár', '', NUM)
 fml('rooms', 'Þar af herbergistekjur', f'={R["rev"]}/(1+{R["fb"]})', 'm.kr/ár', '', NUM)
 fml('nights', 'Seldar nætur á ári', f'={R["keys"]}*365*{R["occ"]}', 'nætur', '', NUM)
@@ -80,10 +82,22 @@ fml('revpar', 'RevPAR án VSK (verð × nýting)', f'={R["adr"]}*{R["occ"]}', 'k
 fml('sumar', 'Sumarverð með VSK (meðaltal × 1,35)', f'={R["adr_vsk"]}*1.35', 'kr', 'Reykjavík: sumar 40–50% yfir vetri; JHB verðskrá 55/42/32', NUM)
 fml('vetur', 'Vetrarverð með VSK (meðaltal × 0,78)', f'={R["adr_vsk"]}*0.78', 'kr', '', NUM)
 fml('rev_key', 'Tekjur á herbergi á ári', f'={R["rev"]}/{R["keys"]}', 'm.kr', 'Íslandshótel 8,5 (2024, öll keðjan)', NUM1)
-fml('op', 'Rekstraraðili heldur eftir leigu (USALI: EBITDAR ≈ 37% af tekjum við þessa tekjusamsetningu, − FF&E 4% − leiga)', f'=0.37-0.04-{R["C"]}', '% tekna', 'Neikvætt eða < 8% = enginn rekstraraðili skrifar undir', PCT)
+fml('op', 'Rekstraraðili heldur eftir leigu (USALI: EBITDAR ≈ 40% af tekjum við litla F&B, − FF&E 4% − leiga)', f'=0.40-0.04-{R["C"]}', '% tekna', 'Neikvætt eða < 8% = enginn rekstraraðili skrifar undir', PCT)
 
+sec('3b. Forsendur Næslands 27.9.2026 – hvað ber húsið með þeirra leiguþoli?')
+inp('n_rent', 'Leiguþol hótels skv. Næslandi, ár 3', 460, 'm.kr/ár', 'NÆS_herb.pdf: 35% af herbergistekjum 1.299, engin F&B; EBITDA fyrir leigu 590', NUM1, True)
+inp('n_kola', 'Kolaportið skv. Næslandi', 45.6, 'm.kr/ár', 'NÆS_herb.pdf: 3,8 m.kr/mán', NUM1, True)
+fml('n_leiga', 'Leigutekjur alls', f'={R["n_rent"]}+{R["n_kola"]}', 'm.kr/ár')
+fml('n_noi', 'NOI eiganda (− fastur kostnaður − umsýsla 1%)', f'={R["n_leiga"]}*0.99-{R["fixed"]}', 'm.kr/ár')
+fml('n_price_dev', 'Verð sem húsið ber – þróunaraðili (D 20%, krafa 6,75%)', f'=({R["n_noi"]}/0.0675/1.2-{R["A"]}-{R["F_A"]}-{R["H"]}-{R["K"]})/(1+{R["ltc"]}*{R["r"]}*{R["t_p"]})', 'm.kr', 'Neikvætt = vantar upp á þótt húsið væri gefið', NUM, True)
+fml('n_price_lt', 'Verð sem húsið ber – langtímaeigandi (D 10%, krafa 6,0%)', f'=({R["n_noi"]}/0.06/1.1-{R["A"]}-{R["F_A"]}-{R["H"]}-{R["K"]})/(1+{R["ltc"]}*{R["r"]}*{R["t_p"]})', 'm.kr', '', NUM, True)
+fml('n_kola_mkt', 'Sama leiguþol, en jarðhæð á markaðsleigu: salur ×3 + blokkir 5.000 kr/m²/mán', f'=({R["kola_m2"]}*{R["kola_now"]}*3+{R["blk_m2"]}*5000)*12/1000000', 'm.kr/ár')
+fml('n_noi2', 'NOI með jarðhæð á markaðsleigu', f'=({R["n_rent"]}+{R["n_kola_mkt"]})*0.99-{R["fixed"]}', 'm.kr/ár')
+fml('n_price_lt2', 'Verð sem húsið ber – langtímaeigandi, jarðhæð á markaðsleigu', f'=({R["n_noi2"]}/0.06/1.1-{R["A"]}-{R["F_A"]}-{R["H"]}-{R["K"]})/(1+{R["ltc"]}*{R["r"]}*{R["t_p"]})', 'm.kr', '', NUM, True)
+fml('n_price_dev2', 'Verð sem húsið ber – þróunaraðili, jarðhæð á markaðsleigu', f'=({R["n_noi2"]}/0.0675/1.2-{R["A"]}-{R["F_A"]}-{R["H"]}-{R["K"]})/(1+{R["ltc"]}*{R["r"]}*{R["t_p"]})', 'm.kr', '', NUM, True)
+r += 1
 sec('4. Viðmið')
-for name, v, src in [('Íslandshótel, öll keðjan 2023, án VSK', 25400, 'Útgefandalýsing maí 2024'), ('B-flokkur, upper upscale, án VSK', 48000, 'Konsulat/Parliament-flokkur, €330'), ('C-flokkur, lúxus, án VSK', 65000, 'EDITION-flokkur, €450'), ('Black Dunes Þorlákshöfn áætlun 2027–32, án VSK', 30000, 'Flóra rekstraráætlun 17.3.2025'), ('Næsland-áætlun ár 3, m/VSK ≈ 40 þ.kr', 36000, 'Rekstrar- og söluáætlun draft 1')]:
+for name, v, src in [('Íslandshótel, öll keðjan 2023, án VSK', 25400, 'Útgefandalýsing maí 2024'), ('B-flokkur, upper upscale, án VSK', 48000, 'Konsulat/Parliament-flokkur, €330'), ('C-flokkur, lúxus, án VSK', 65000, 'EDITION-flokkur, €450'), ('Black Dunes Þorlákshöfn áætlun 2027–32, án VSK', 30000, 'Flóra rekstraráætlun 17.3.2025'), ('Næsland-áætlun 27.9.2026 ár 3, án VSK (1.299 m.kr / 122 herb. / 73,6%)', 39600, 'NÆS_herb.pdf')]:
     ws.cell(r, 1, name); c = ws.cell(r, 2, v); c.font = BLUE; c.number_format = NUM; ws.cell(r, 3, 'kr').font = SRC; ws.cell(r, 4, src).font = SRC; r += 1
 r += 1
 
@@ -120,11 +134,11 @@ ws.freeze_panes = 'A4'
 wb.save(OUT); print('saved', OUT)
 
 # ---- python cross-check
-def bak(pct, keys=123, occ=0.75, fb=0.40, C=0.25, D=0.20, y=0.0675, kola_now=1000, kx=1.0, A0=5483, ffe=0, cf=1.0):
-    price = 4725.5 * pct; A = (A0 * 0.65 + A0 * 0.35 * keys / 123 + ffe * 739 * keys / 123) * cf
+def bak(pct, keys=122, occ=0.736, fb=0.20, C=0.25, D=0.20, y=0.0675, kola_now=1570, kx=1.0, A0=5457, ffe=0, cf=1.0, blk=0):
+    price = 4725.5 * pct; A = (A0 * 0.65 + A0 * 0.35 * keys / 122 + ffe * 735 * keys / 122) * cf
     K = 4725.5 * 0.016 + 20; FA = A * 0.7 * 0.102; FP = price * 0.7 * 0.102 * 4.5; H = (93.31 + 15.5) * 3 - 2409.6 * kola_now * 12 / 1e6 * 2
     T = price + K + A + FA + FP + H; V = T * (1 + D); noi = V * y; fixed = 93.31 * 1.25 + 8.25 + A * 0.005
-    leiga = (noi + fixed) / 0.99; kola = 2409.6 * kola_now * kx * 12 / 1e6; hrent = leiga - kola; rev = hrent / C; rooms = rev / (1 + fb)
+    leiga = (noi + fixed) / 0.99; kola = (2409.6 * kola_now * kx + 1081.9 * blk) * 12 / 1e6; hrent = leiga - kola; rev = hrent / C; rooms = rev / (1 + fb)
     return rooms * 1e6 / (keys * 365 * occ), leiga, hrent
 if __name__ == '__main__':
     for args in [dict(pct=0.42), dict(pct=0.42, D=0.10, y=0.06), dict(pct=0.42, D=0.10, y=0.06, kx=3), dict(pct=1.0), dict(pct=0.2, D=0.10, y=0.06, kx=3)]:

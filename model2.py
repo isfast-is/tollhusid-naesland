@@ -11,10 +11,13 @@ A_TOTAL = 10150.8
 A_HOTEL_CONV = AREA['h1_hotel'] + AREA['h2'] + AREA['h3'] + AREA['h4'] + AREA['h5']    # 6.879,7 – breytt í hótel
 A_BOH = A_TOTAL - AREA['h1_kolaport'] - A_HOTEL_CONV                                   # kjallari + lyftuhús + afgangur ≈ 861
 
+TIERS_ALL = dict(M1.TIERS); TIERS_ALL['N'] = dict(name='N – Þétt hönnunarhótel (skipan Næslands: 86 std 19,6 m², 35 sup 29,4 m², 1 svíta)', keys=122, adr=38000, occ=0.736, fb=0.20, other=0.03, ebitda=0.36, fit_hard=8.0, ffe=3.5, public=350.0, key_m2=23)
+
 # ---- Herbergi eftir hæðum, lesið af grunnmyndum 1:200 (BN045618). Suðurálma ~78 m × 15,5 m með tveimur kjörnum;
 #      norðurálma 4./5. hæðar ~18 m; 2. hæð: norðurhlið álmunnar liggur inn í Kolaportssalinn → einhliða gangur;
 #      3. hæð: inndregin, norðurhlið opnast út á þakflöt (garðherbergi). Breidd herbergja ræður: 3,9 m (27–30 m² nettó) / 4,5 m (33–36 m²).
 KEYS = {
+    'Næsland 27.9. (DWG)': dict(h5=42, h4=42, h3=20, h2=18, total=122),
     'þétt (3,9 m)':   dict(h5=39, h4=39, h3=28, h2=17, total=123),
     'Næsland-breidd (4,5 m)': dict(h5=34, h4=34, h3=24, h2=14, total=106),
     'Næsland-skipan': dict(h5=34, h4=34, h3=10, h2=11, total=89),   # lobby á 3. hæð, gym á 2. hæð eins og í kynningu
@@ -24,17 +27,19 @@ KEYS = {
 HYATT = dict(adstada=50.1, jardvinna=29.6, burdarvirki=90.1, lagnir=78.2, raflagnir=112.7, innanhuss=253.9, utanhuss=118.5, lod=14.9, ovissa=11.9,
              soft=118.75, construction=759.9, total=894.3, keys=169, m2=9922.9)
 ADJ = dict(adstada=45.0, jardvinna=25.0, burdarvirki=30.0, lagnir=78.0, raflagnir=100.0, utanhuss=118.0, lod=8.0)   # innanhúss eftir flokki
-TIER_INNAN = {'A': 210.0, 'B': 254.0, 'C': 320.0}
-TIER_FFE = {'A': 3.0, 'B': 5.0, 'C': 8.0}
+TIER_INNAN = {'N': 230.0, 'A': 210.0, 'B': 254.0, 'C': 320.0}
+TIER_FFE = {'N': 3.5, 'A': 3.0, 'B': 5.0, 'C': 8.0}
 COWI_LUMPS = dict(hazmat=180.0, sewer=120.0, kolaport_fix=120.0)
 BOH_RATE = 200.0          # þ.kr/m² – kjallari/tæknirými gerð nothæf, ekki innréttuð
 UNC = 0.10                # ófyrirséð á framkvæmd (Hyatt endaði í 12% ofan á samninga með aukaverkum)
 SOFT = 0.13               # hönnun, byggingarstjórn, eftirlit, umsýsla (Hyatt 15,6% af framkvæmd)
 IF_FEE = 0.03
 NEWBUILD_RATE = HYATT['total']   # ofanábygging: Hyatt allt-í-allt sem viðmið fyrir nýbyggingu ofan á hús
-A_V1 = 5483.0                    # kostnaðaráætlun fullbúið hótel v1.0 (23.9.2026): hús fullbúið án lauss búnaðar, 123 herb.
-FFE_V1 = 739.0
-TIER_ADJ = {'A': 0.93, 'B': 1.0, 'C': 1.12}
+A_V1 = 5457.0                    # kostnaðaráætlun fullbúið hótel v1.1 (28.9.2026): hús fullbúið án lauss búnaðar, 122 herb., jarðhæð í skel
+FFE_V1 = 735.0
+KEYS_V1 = 122
+TIER_ADJ = {'N': 1.0, 'A': 0.93, 'B': 1.06, 'C': 1.18}
+GROUND = dict(hall_m2=2409.6, hall_rate=1570.0, blocks_m2=1081.9, blocks_rate=0.0)   # kr/m²/mán; hall 1.570 = 3,78 m.kr/mán (Næsland 45,6 m.kr/ár)
 USE_V1 = True
 
 def capex(tier='B', keys=106, cost_factor=1.0, extra_m2=0.0, extra_use='none', ground='kolaport', detail=False):
@@ -58,7 +63,7 @@ def capex(tier='B', keys=106, cost_factor=1.0, extra_m2=0.0, extra_use='none', g
         elif extra_use == 'ibudir':
             extra = extra_m2 * 950.0 / 1000.0 * 1.18   # íbúðir: VSK af byggingarkostnaði fæst ekki endurgreiddur
     if USE_V1:
-        base = A_V1 * (0.65 + 0.35 * keys / 123.0) * TIER_ADJ[tier]
+        base = A_V1 * (0.65 + 0.35 * keys / KEYS_V1) * TIER_ADJ[tier]
         g_adj = ground_capex * 1.3
         total = (base + g_adj) * cost_factor + extra + extra_ffe
         ffe = 0.0
@@ -73,18 +78,21 @@ def capex(tier='B', keys=106, cost_factor=1.0, extra_m2=0.0, extra_use='none', g
     out['per_key'] = out['hotel_only'] / keys
     return out
 
-def revenue(tier='B', keys=106, occ=None, adr=None):
-    t = M1.TIERS[tier]
+def revenue(tier='N', keys=122, occ=None, adr=None):
+    t = TIERS_ALL[tier]
     adr = adr or t['adr']; occ = occ or t['occ']
     rooms = keys * adr * occ * 365 / 1e6
     rev = rooms * (1 + t['fb'] + t['other'])
     return dict(rooms=rooms, rev=rev, ebitda=rev * t['ebitda'])
 
-def ground_rent(ground='kolaport', rent_m2_man=5500.0):
-    if ground == 'kolaport': return 45.3
-    return AREA['h1_kolaport'] * rent_m2_man * 12 / 1e6
+def ground_rent(ground='kolaport', rent_m2_man=5500.0, hall_rate=None, blocks_rate=None):
+    if hall_rate is not None or blocks_rate is not None:
+        hr = GROUND['hall_rate'] if hall_rate is None else hall_rate; br = GROUND['blocks_rate'] if blocks_rate is None else blocks_rate
+        return (GROUND['hall_m2'] * hr + GROUND['blocks_m2'] * br) * 12 / 1e6
+    if ground == 'kolaport': return GROUND['hall_m2'] * GROUND['hall_rate'] * 12 / 1e6
+    return (AREA['h1_kolaport'] * rent_m2_man + GROUND['blocks_m2'] * rent_m2_man) * 12 / 1e6
 
-def rett_verd(tier='B', keys=106, C=0.30, D=0.20, yld=0.0675, cost_factor=1.0, extra_m2=0.0, extra_use='none', ground='kolaport',
+def rett_verd(tier='N', keys=122, C=0.30, D=0.20, yld=0.0675, cost_factor=1.0, extra_m2=0.0, extra_use='none', ground='kolaport',
               rent_m2_man=5500.0, sale_m2=1350.0, saleable=0.85):
     X = capex(tier, keys, cost_factor, extra_m2, extra_use, ground)
     R = revenue(tier, X['keys_total'] if extra_use == 'hotel' else keys)
@@ -97,7 +105,7 @@ def rett_verd(tier='B', keys=106, C=0.30, D=0.20, yld=0.0675, cost_factor=1.0, e
         apt = extra_m2 * saleable * sale_m2 / 1000.0 * 0.98     # nettó söluverðmæti, 2% sölukostnaður
     A = X['total']
     F_A = A * 0.70 * 0.102 * 1.0
-    H = (85.48 + 7.83 + 5.53 + 10) * 3 - 45.3 * 2.0
+    H = (85.48 + 7.83 + 5.53 + 10) * 3 - ground_rent('kolaport') * 2.0
     K = 4725.5 * 0.016 + 20
     price = ((V + apt) / (1 + D) - A - F_A - H - K) / (1 + 0.70 * 0.102 * 4.5)
     return dict(A=A, per_key=X['per_key'], keys=X['keys_total'], rev=R['rev'], leiga=leiga, noi=noi, V=V, apt=apt, price=price, X=X)

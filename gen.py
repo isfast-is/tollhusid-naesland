@@ -3,7 +3,7 @@
 """Tollhúsið – Næsland: mælaborð með glærum. python3 model3.py && python3 gen.py && python3 encrypt.py"""
 import base64, json, os, html as H
 from openpyxl import load_workbook
-_KX = '/Users/villithor/Library/CloudStorage/GoogleDrive-gunnar@lgt.is/My Drive/Claude Projects/Tollhúsið Næsland/Tollhúsið - Kostnaðaráætlun fullbúið hótel v1.0 - 23.09.2026.xlsx'
+_KX = '/Users/villithor/Library/CloudStorage/GoogleDrive-gunnar@lgt.is/My Drive/Claude Projects/Tollhúsið Næsland/Tollhúsið - Kostnaðaráætlun fullbúið hótel v1.1 - 28.09.2026.xlsx'
 _ks = load_workbook(_KX, data_only=True)['Samantekt']
 KOST = []   # (nafn, þ.kr/m², m.kr, m.kr/herb, Næsland m.kr)
 for _r in range(12, 27):
@@ -37,11 +37,11 @@ for t in 'ABC':
         X = CAP[t][k]
         capex_rows.append([t, k, n0(v['total']), n0(X['conv']), n0(X['boh'] + X['lumps']), n0(X['unc']), n0(X['soft'] + X['fee']), n0(X['ffe']), f"<b>{n0(X['hotel_only'])}</b>", f"<b>{n0(X['per_key'])}</b>"])
 pl_rows = []
-for t in 'ABC':
+for t in 'NABC':
     P = PL[t]
     pl_rows.append([t, n0(P['adr']), pct(P['occ']), n0(P['revpar']), n0(P['rooms']), n0(P['fb'] + P['other']), f"<b>{n0(P['rev'])}</b>", n1(P['rev_key'])])
 usali_rows = []
-for t in 'ABC':
+for t in 'NABC':
     P = PL[t]
     usali_rows.append([t, n0(P['rev']), n0(P['dept']), n0(P['gop']) + f" ({pct(P['gop_pct'])})", n0(P['ffe']),
                        f"<b>{n0(P['rent_usali'])}</b> ({pct(P['c_usali'], 1)})", f"<b>{n0(P['rent_oddsson'])}</b> ({pct(P['c_oddsson'], 1)})", f"{n0(P['rent_jhb'])} ({pct(P['c_jhb'], 1)})",
@@ -60,20 +60,14 @@ sel = scen_rows(lambda s: s['keys'] == 123 and s['cname'] in ('USALI 65%', 'ODDS
 head_scen = ['Fl.', 'Herb.', 'Kostn.', 'C-viðmið', 'C', 'Jarðhæð', 'D / krafa', 'A', 'A/herb', 'Leiga', 'NOI', 'Verðmæti', 'Rétt verð']
 
 
-KYN_SLIDE = '''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9</div><h2>Möguleg tilboðssviðsmynd – ef Næsland vill bjóða</h2><p class="lead">Mat ÍF í hnotskurn og hvað lágt tilboð með fullum fyrirvörum myndi krefjast. 123 herbergi, 75% nýting, leiga 25% af heildartekjum, framkvæmd skv. áætlun ÍF án lauss búnaðar.</p>
+S8C_ROWS = [[f"{int(r[0]):,} m.kr ({r[0]/4725.5*100:.0f}% af fmat)".replace(',', '.'), r[1], ('óbreytt' if r[2]==1 and r[3]==0 else f'salur ×{r[2]:g} + blokkir {int(r[3]):,} kr/m²'.replace(',', '.')), f'{r[4]:,.0f}'.replace(',', '.'), f'{r[5]:,.0f}'.replace(',', '.'), f'€{r[6]:,.0f}'] for r in json.load(open(os.path.join(HERE, 's8c_rows.json')))]
+KYN_SLIDE = '''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9</div><h2>Möguleg tilboðssviðsmynd – ef Næsland vill bjóða</h2><p class="lead">Mat ÍF í hnotskurn og hvað lágt tilboð með fullum fyrirvörum myndi krefjast. 122 herbergi skv. skipan Næslands, 73,6% nýting, 20% F&B, leiga 25% af heildartekjum, framkvæmd skv. áætlun ÍF v1.1 án lauss búnaðar.</p>
 <div class="callout hl"><b>Mat ÍF.</b> Á þeim forsendum sem hér eru raktar stendur hótel í Tollhúsinu ekki undir kaupverði sem seljandi er líklegur til að sætta sig við. Umbreytingin sjálf, um 5,5 ma.kr, ræður mestu; kaupverðið breytir tiltölulega litlu um verðið sem hvert herbergi þarf að seljast á. ÍF ráðleggur Næslandi því að bjóða ekki nema með lágu verði og fyrirvörum sem gera kleift að ganga frá ef forsendur standast ekki. Sé sá vilji fyrir hendi er sviðsmyndin hér að neðan sú sem við teljum verjanlega.</div>
 <div class="grid g2">
-<div>{tbl(['Tilboð', 'Sjónarhorn fjárfesta', 'Jarðhæð', 'Verð á nótt án VSK', 'Með VSK', 'Um það bil'], [
- ['500 m.kr (11% af fmat)', 'Þróunaraðili, D 20%, krafa 6,75%', 'óbreytt', '58.500', '65.000', '€450'],
- ['500 m.kr', 'Langtímaeigandi, D 10%, krafa 6,0%', 'óbreytt', '49.600', '55.100', '€380'],
- ['500 m.kr', 'Langtímaeigandi', '×3 (markaðsleiga)', '44.700', '49.600', '€340'],
- ['1.000 m.kr (21% af fmat)', 'Þróunaraðili, D 20%, krafa 6,75%', 'óbreytt', '63.100', '70.000', '€480'],
- ['1.000 m.kr', 'Langtímaeigandi, D 10%, krafa 6,0%', 'óbreytt', '53.400', '59.200', '€410'],
- ['1.000 m.kr', 'Langtímaeigandi', '×3 (markaðsleiga)', '48.500', '53.800', '€370'],
- ['1.000 m.kr', 'Langtímaeigandi, ×3, kostnaður −10%, nýting 78%', '×3', '43.200', '47.900', '€330'],
-])}
+<div>{tbl(['Tilboð', 'Sjónarhorn fjárfesta', 'Jarðhæð', 'Verð á nótt án VSK', 'Með VSK', 'Um það bil'], S8C_ROWS)}
 <p class="src">Ársmeðaltal á selda nótt. Sumarverð um 35% hærra, vetrarverð um 22% lægra. Til samanburðar: Íslandshótel 25.400 kr án VSK að meðaltali 2023, efra millistig í miðborginni 45–50.000, lúxus 65.000.</p>
-<div class="callout"><b>Lesturinn.</b> Munurinn á 500 m.kr og 1 ma.kr tilboði er um 4.500 kr á nótt. Munurinn á þróunaraðila og langtímaeiganda er um 9.000 kr, og Kolaportið á markaðsleigu um 5.000 kr. Þetta þrennt, ekki kaupverðið, ræður því hvort hótelið þarf að vera efra millistig eða lúxus.</div></div>
+<div class="callout"><b>Lesturinn.</b> Munurinn á 500 m.kr og 1 ma.kr tilboði er um 5.000 kr á nótt. Munurinn á þróunaraðila og langtímaeiganda er um 10.000 kr, og jarðhæðin öll á markaðsleigu um 16.000 kr. Þetta þrennt, ekki kaupverðið, ræður því hvort hótelið þarf að vera efra millistig eða lúxus.</div>
+<div class="callout hl"><b>Forsendur Næslands 27.9.2026 í sömu keðju.</b> Leiguþol 460 m.kr + Kolaportið 45,6 ber kaupverð upp á −681 m.kr hjá langtímaeiganda og −1.421 m.kr hjá þróunaraðila. Með jarðhæðina alla á markaðsleigu (salur ×3 + blokkir 5.000 kr/m²/mán) verður það +1.085 m.kr hjá langtímaeiganda. Jarðhæðin er verkefnið.</div></div>
 <div><h3 style="margin:0 0 8px;color:var(--navy)">Fyrirvarar sem fylgja tilboðinu</h3><ul class="tight">
 <li><b>Ástandsskoðun og áreiðanleikakönnun</b> innan t.d. 90 daga: opnanir, myndun frárennslislagna í grunni, magn asbests og PCB, rakakortlagning, verktakatilboð í glugga, klæðningu og lagnir. Kaupandi getur gengið frá án kostnaðar ef niðurstaðan víkur frá forsendum.</li>
 <li><b>Deiliskipulag:</b> hótel heimilað á lóðinni ásamt tilgreindu viðbótarbyggingarmagni. Gangi breytingin ekki í gegn fellur samningurinn niður.</li>
@@ -82,9 +76,9 @@ KYN_SLIDE = '''<section id="s8c"><div class="k" style="color:var(--gold)">★ 9<
 <li><b>Forkaupsréttur og samþykki hafnarstjórnar</b> útkljáð, og staða Kolaportssamnings ríkis og borgar skýr.</li>
 <li><b>Söluheimild</b> ríkisins staðfest í fjárlögum og afhending ekki fyrr en að fyrirvörum uppfylltum.</li></ul>
 <h3 style="margin:16px 0 8px;color:var(--navy)">Hvað þarf að vera satt</h3><ul class="tight">
-<li>Rekstraraðili sem trúir á 50–60.000 kr meðalverð á nótt án VSK og skrifar undir 25 ára samning á um 25% af tekjum með ábyrgð.</li>
+<li>Rekstraraðili sem trúir á 40–50.000 kr meðalverð á nótt án VSK fyrir 20–30 m² herbergi og skrifar undir 25 ára samning á um 25% af tekjum með ábyrgð.</li>
 <li>Langtímaeigandi að fullbúinni eign á um 6% kröfu, samið fyrirfram.</li>
-<li>Jarðhæðin á markaðsleigu í sátt við borgina.</li>
+<li>Jarðhæðin öll, Kolaportssalur og blokkirnar við Tryggvagötu, á markaðsleigu í sátt við borgina. Það er stærsta einstaka forsendan.</li>
 <li>Framkvæmdakostnaður á eða undir áætlun ÍF, staðfestur með tilboðum áður en fyrirvörum er aflétt.</li></ul>
 <div class="callout"><b>Hvað seljandi sér.</b> Fasteignamat 4,7 ma.kr; ríkið mat húsið sjálft á að minnsta kosti 2 ma.kr 2022. Tilboð upp á 0,5–1 ma.kr með sex fyrirvörum verður ekki hæsta tilboðið ef aðrir bjóða. Það er verjanlegt verð, ekki líklegt vinningsverð.</div></div>
 </div></section>
@@ -121,24 +115,24 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 </style></head><body>
 <nav><h1>TOLLHÚSIÐ</h1><div class="sub">Næsland · greining fyrir tilboð · trúnaðarmál</div>
 <a href="#s0">Forsíða</a><a href="#s1">Í hnotskurn</a><a href="#s2">Eignin og áhætturnar</a><a href="#s3">Teikningar og herbergi</a><a href="#s4">A · Umbreyting</a><a href="#s5">B · Tekjur</a><a href="#s6">C · Leiga</a><a href="#s7">D · Fjármögnun og arðsemi</a><a href="#s8">Rétt verð · reiknivél</a><a href="#s8b">Bakreikningur · verð á nótt</a><a href="#s9">Sviðsmyndir</a><a href="#s10">Samkeppni og tilboðsform</a><a href="#s11">Næstu skref og heimildir</a>
-<div class="foot">Drög 2 · 25.9.2026 · líkan v0.4<br>Örvatakkar fletta glærum<br><button onclick="try{{localStorage.removeItem('tollhus_pass')}}catch(e){{}};location.reload()">Læsa síðu</button></div></nav>
+<div class="foot">Drög 3 · 28.9.2026 · líkan v0.5<br>Örvatakkar fletta glærum<br><button onclick="try{{localStorage.removeItem('tollhus_pass')}}catch(e){{}};location.reload()">Læsa síðu</button></div></nav>
 <main>
-<section id="s0" class="hero"><div class="txt"><div class="k">ÍSLENSKAR FASTEIGNIR · NÆSLAND · 25. SEPTEMBER 2026</div><h2>Tollhúsið, Tryggvagötu 19</h2><div class="sub">Hvað stendur hótelverkefni undir háu kaupverði? Afleiðsla í fjórum skrefum: A framkvæmd · B tekjur · C leiga · D arðsemi</div>
+<section id="s0" class="hero"><div class="txt"><div class="k">ÍSLENSKAR FASTEIGNIR · NÆSLAND · 28. SEPTEMBER 2026</div><h2>Tollhúsið, Tryggvagötu 19</h2><div class="sub">Hvað stendur hótelverkefni undir háu kaupverði? Afleiðsla í fjórum skrefum: A framkvæmd · B tekjur · C leiga · D arðsemi</div>
 <p>Ríkissjóður selur Tollhúsið, 10.150,8 m² á 4.862 m² leigulóð, í gegnum Fasteignasöluna TORG. Tilboðsfrestur er föstudaginn 9. október 2026. Næsland-hópurinn, ásamt Íslandshótelum, leitar til ÍF sem þróunaraðila. Þessi síða leiðir kaupverðið út sem afleidda stærð, með teikningum hússins, kostnaðaráætlun ÍF, íslenskum leiguviðmiðum og fjármögnunarkjörum sem ÍF þekkir. Engin tala er föst fyrirfram.</p>
 <p style="color:#7F91A3;font-size:12.5px">Vinnuskjal GT/ÍF. Gögn frá Næslandi, COWI, TORG, skjalasafni Reykjavíkur og áætlunum ÍF. Ekkert hefur farið út úr húsi.</p></div><img src="{b64('hero.jpg')}" alt=""></section>
 
 <section id="s1"><div class="k">1</div><h2>Í hnotskurn</h2><p class="lead">Fimm staðreyndir sem ráða málinu, og aðferðin sem síðan fylgir.</p>
 <div class="grid g4">
-<div class="card"><h3>Húsið ber</h3><div class="big">106–123 <small>herbergi</small></div><p>Lesið af grunnmyndum 1:200 (BN045618). Næsland skipaði 89–100 með lobby á 3. hæð. Jarðhæðin, afgreiðsla tollstjóra 730 m² bak við mósaíkið, er lobbyið.</p></div>
-<div class="card"><h3>Umbreyting kostar</h3><div class="big">{n1(A_HUS/1000)} <small>ma.kr án VSK og án lauss búnaðar</small></div><p>Kostnaðaráætlun ÍF v1.0, kaflar 0–8 með magni og einingarverðum, rýnd 25.9. Það eru {n0(A_HUS/123)} m.kr á herbergi við 123 herbergi, {n0((A_HUS+A_FFE)/123)} með lausum búnaði. Næsland gerði ráð fyrir 1,4 ma.kr, 14 m.kr á herbergi án VSK.</p></div>
-<div class="card"><h3>Leiga sem hótel þolir</h3><div class="big">20–25% <small>af heildartekjum</small></div><p>USALI-uppbygging 20–24%, ODDSSON-samningur ÍF 25% (30% af herbergistekjum). Næsland miðaði við 34% af herbergistekjum án F&B, sem jafngildir 22–28%.</p></div>
-<div class="card"><h3>Verð á nótt sem kaupverðið krefst</h3><div class="big">60–80 <small>þ.kr með VSK</small></div><p>Við 2 ma.kr kaupverð, 123 herbergi og 75% nýtingu þarf meðalverð á selda nótt að vera 66 þ.kr með VSK hjá langtímaeiganda og 80 þ.kr hjá þróunaraðila. Sjá Bakreikning.</p></div>
+<div class="card"><h3>Húsið ber</h3><div class="big">122 <small>herbergi</small></div><p>Skipan Næslands 27.9.2026 af DWG-teikningum: 86 Standard 19,6 m², 35 Superior 29,4 m², 1 svíta; talning ÍF af 1:200 gaf 123. Lobby á 2. hæð, veitingastaður á 3. hæð, jarðhæðin öll laus til útleigu.</p></div>
+<div class="card"><h3>Umbreyting kostar</h3><div class="big">{n1(A_HUS/1000)} <small>ma.kr án VSK og án lauss búnaðar</small></div><p>Kostnaðaráætlun ÍF v1.1, kaflar 0–8 með magni og einingarverðum, uppfærð á skipan Næslands 122 herbergi. Það eru {n0(A_HUS/122)} m.kr á herbergi, {n0((A_HUS+A_FFE)/122)} með lausum búnaði. Næsland nefnir sjálft um 55 m.kr á herbergi í uppfærðum forsendum 27.9.</p></div>
+<div class="card"><h3>Leiga sem hótel þolir</h3><div class="big">20–25% <small>af heildartekjum</small></div><p>USALI-uppbygging 20–24%, ODDSSON-samningur ÍF 25% (30% af herbergistekjum). Næsland miðar við 460 m.kr = 35% af herbergistekjum án F&B og skilur rekstraraðilann eftir með 10%.</p></div>
+<div class="card"><h3>Með leiguþoli Næslands</h3><div class="big">−0,7 til +1,1 <small>ma.kr</small></div><p>Leiguþol Næslands, 460 m.kr, og Kolaportið á 45,6 gefa neikvætt verð fyrir húsið (−0,7 hjá langtímaeiganda, −1,4 hjá þróunaraðila). Jarðhæðin öll á markaðsleigu snýr því í +1,1 hjá langtímaeiganda. Sjá Bakreikning.</p></div>
 </div>
 <div class="callout"><b>Aðferð.</b> Verðið er afleidd stærð, og Bakreikningurinn snýr keðjunni við og sýnir hvaða verð á nótt tiltekið kaupverð krefst. Verðið er afleidd stærð: verðmæti fullbúins hótels (NOI eiganda / ávöxtunarkrafa) að frádreginni arðsemiskröfu fjárfesta (D), umbreytingu (A), fjármagnskostnaði og biðtíma, gefur það sem hægt er að greiða fyrir húsið eins og það er. Hver liður er reitur í reiknivélinni á glæru 8 og í Excel-líkaninu. Tilboðið verður eitt verð með walk-away fyrirvara um deiliskipulag (hótel + tilgreint viðbótarbyggingarmagn), fjármögnun og lóðarleigusamning.</div>
 <div class="grid g3">
 <div class="card"><h3>Það sem er sterkt</h3><ul class="tight"><li>Burðarvirki og steypa í góðu lagi, ein hæð til viðbótar möguleg burðarþolslega (COWI 6.9.2024)</li><li>Staðsetning, kennileiti, mósaík Gerðar Helgadóttur, torgið</li><li>Kolaportið og þakflötur 3. hæðar sem sölutæki gagnvart ríki og borg</li><li>Hæðarhæð 3,2–3,45 m og 15,5 m djúp álma hentar tvíhliða hótelgangi</li></ul></div>
-<div class="card"><h3>Það sem er veikt</h3><ul class="tight"><li>Hótel ekki heimilt í deiliskipulagi Kvosar; lóðarleigusamningur útrunninn 2017</li><li>Asbest 550–600 m², PCB, mygla á öllum hæðum nema 5., frárennsli í grunni ónýtt, 1.600 m² gluggaveggir</li><li>2. hæð er einhliða (norðurhlið inni í Kolaportssal); 63 m² brúttó á herbergi við 123 herbergi, nýbygging er nær 55–60</li><li>Fasteignagjöld 93 m.kr á ári frá kaupdegi; forkaupsréttur og samþykki hafnarstjórnar</li></ul></div>
-<div class="card"><h3>Það sem ræður úrslitum</h3><ul class="tight"><li><b>Kostnaðarprófið:</b> áætlun v1.0 er rýnd, en gluggar, klæðning, frárennsli og afmengun eru mat þar til tilboð liggja fyrir.</li><li><b>Jarðhæðarprófið:</b> Kolaportið greiðir 45 m.kr fyrir 2.410 m²; markaðsleiga væri 145–200.</li><li><b>Eigendaprófið:</b> D 20% á 6,75% eða langtímaeigandi á D 10% og 6,0% munar 1–2 ma.kr.</li><li><b>Rekstraraðilinn:</b> hver skrifar undir 25 ára leigu og með hvaða ábyrgð.</li></ul></div>
+<div class="card"><h3>Það sem er veikt</h3><ul class="tight"><li>Hótel ekki heimilt í deiliskipulagi Kvosar; lóðarleigusamningur útrunninn 2017</li><li>Asbest 550–600 m², PCB, mygla á öllum hæðum nema 5., frárennsli í grunni ónýtt, 1.600 m² gluggaveggir</li><li>2. hæð er einhliða (norðurhlið inni í Kolaportssal); 63 m² brúttó á herbergi, nýbygging er nær 55–60; 86 af 122 herbergjum eru 2,8 m breið</li><li>Fasteignagjöld 93 m.kr á ári frá kaupdegi; forkaupsréttur og samþykki hafnarstjórnar</li></ul></div>
+<div class="card"><h3>Það sem ræður úrslitum</h3><ul class="tight"><li><b>Kostnaðarprófið:</b> áætlun v1.0 er rýnd, en gluggar, klæðning, frárennsli og afmengun eru mat þar til tilboð liggja fyrir.</li><li><b>Jarðhæðarprófið:</b> Kolaportið greiðir 45,6 m.kr fyrir 2.410 m² og blokkirnar við Tryggvagötu, 1.082 m², losna í skipan Næslands. Öll jarðhæðin á markaðsleigu væri 200–250 m.kr og ræður úrslitum.</li><li><b>Eigendaprófið:</b> D 20% á 6,75% eða langtímaeigandi á D 10% og 6,0% munar 1–2 ma.kr.</li><li><b>Rekstraraðilinn:</b> hver skrifar undir 25 ára leigu og með hvaða ábyrgð.</li></ul></div>
 </div></section>
 
 <section id="s2"><div class="k">2</div><h2>Eignin og áhætturnar</h2><p class="lead">Söluyfirlit TORG 31.8.2026, fasteigna- og veðbandayfirlit HMS, umsögn skipulagsfulltrúa 4.4.2024, COWI 2024 og 2025.</p>
@@ -172,7 +166,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <figure><img src="{b64('plan2.jpg')}" alt="2. hæð"><figcaption><b>2. hæð, 1.591 m².</b> Norðurhlið álmunnar liggur inn í Kolaportssalinn: aðeins herbergi sunnan megin, 14–17. Næsland setti þar 11 og gym.</figcaption></figure>
 <figure><img src="{b64('plan1.jpg')}" alt="1. hæð"><figcaption><b>1. hæð, 3.515 m².</b> Kolaportssalur 2.410 m². Austurblokkin, afgreiðsla tollstjóra 730 m² við Pósthússtræti og Steinbryggju, er lobby og veitingastaður; vesturblokkin starfsmannarými.</figcaption></figure>
 </div>
-<div class="grid g2" style="margin-top:8px"><div>{tbl(['Skipan', '5. hæð', '4. hæð', '3. hæð', '2. hæð', 'Alls'], keys_rows)}<p class="src">Talning: 30% í kjarna og ganga af brúttó; herbergi 3,9 m eða 4,5 m breið og 6,5 m djúp. Nákvæm skipan bíður arkitekts, en bilið 106–123 er það sem húsið ber.</p></div>
+<div class="grid g2" style="margin-top:8px"><div>{tbl(['Skipan', '5. hæð', '4. hæð', '3. hæð', '2. hæð', 'Alls'], keys_rows)}<p class="src">Efsta línan er skipan Næslands 27.9.2026 af DWG-teikningum (Standard 2,8 × 7,0 m, Superior 4,2 × 7,0 m, hliðarhús 5,5 × 4,2 m; lobby, lounge og kaffihús á 2. hæð, veitingastaður og bar á 3. hæð). Hinar línurnar eru talning ÍF af 1:200 uppdráttum. Húsið ber um 120 herbergi hvernig sem á er litið.</p></div>
 <figure><img src="{b64('snid.jpg')}" alt="Snið"><figcaption><b>Snið A-A og B-B.</b> Gólfkótar 3,90 / 7,10 / 10,40 / 13,60 / 17,05. Þakplata 3. hæðar og 5. hæðar þola eina hæð til viðbótar (COWI 6.9.2024).</figcaption></figure></div></section>
 
 <section id="s4"><div class="k">4 · A</div><h2>Umbreytingarkostnaður – áætlun ÍF v1.0</h2><p class="lead">Kostnaðaráætlun fullbúins hótels í sniði ÍF, kaflar 0–9 með magni, einingarverðum og heimild við hverja línu. Rýnd af GT og Sveini 25.9.2026. Allt án VSK á verðlagi september 2026. Kolaportssalurinn, 2.410 m², er utan áætlunar.</p>
@@ -189,6 +183,7 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <div class="grid g2">
 <div>{tbl(['Fl.', 'ADR án VSK', 'Nýting', 'RevPAR', 'Herbergistekjur', 'F&B og annað', 'Tekjur alls', 'm.kr/herb'], pl_rows)}
 {tbl(['Flokkur', 'Lýsing', 'Viðmið'], [
+ ['N', tiers['N']['name'], 'Grunnur: skipan Næslands. Næsland reiknar 1.299 m.kr herbergistekjur ár 3 = 39.600 kr án VSK (€300 m/VSK) fyrir 19,6 m² Standard; hér 38.000 og 20% F&B'],
  ['A', tiers['A']['name'], 'Næsland-verðskrá 55/42/32 þ.kr m/VSK → ~36 þ.kr án VSK að meðaltali; €245'],
  ['B', tiers['B']['name'], '€330; Konsulat, Iceland Parliament, Sand'],
  ['C', tiers['C']['name'], '€450; EDITION-flokkur, krefst vörumerkis og þjónustu'],
@@ -198,18 +193,18 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
  ['Höfuðborgarsvæðið 2025', 'Nýting 74,7%; 58 hótel, 5.555 herbergi', 'Hagstofa Íslands'],
  ['Black Dunes Þorlákshöfn (Flóra, 120 herb.)', 'ADR 29–32 þ.kr · nýting 67–74% (2027–32)', 'Rekstraráætlun 17.3.2025, isfast Drive'],
  ['ODDSSON 2021 (ÍF, 77 herb.)', 'Brúttó ADR €60–80 · nýting 70–85% eftir mánuðum', 'Áætlun 06/2020, isfast Drive'],
- ['Næsland ár 3', 'Herbergistekjur 1.066 án VSK, nýting 74%, engar F&B-tekjur', 'Rekstrar- og söluáætlun draft 1'],
+ ['Næsland 27.9.2026, ár 3, 122 herb.', 'Herbergistekjur 1.299 án VSK = ADR 39.600 kr, nýting 73,6%, engar F&B-tekjur; EBITDA fyrir leigu 590 (45%)', 'NÆS_herb.pdf'],
  ['Markaðurinn 2025', 'Nýting féll, RevPAR staðið í stað í krónum í tvö ár; sumar 2026 gott', 'Arion greining 2025, mbl 2.9.2026'],
 ], 'wrap')}
-<div class="callout">Tekjur á herbergi eru 11,6 / 17,7 / 24,7 m.kr eftir flokki. Íslandshótel eru á 8,5 að meðaltali yfir allt landið. Flokkur C tvöfaldar tekjurnar á herbergi en fækkar herbergjum um fimmtung og kallar á vörumerki, F&B-rekstur og þjónustustig sem þarf að staðfesta með rekstraraðila.</div></div>
+<div class="callout">Tekjur á herbergi eru 12,6 / 11,6 / 17,7 / 24,7 m.kr eftir flokki (N/A/B/C). Íslandshótel eru á 8,5 að meðaltali yfir allt landið. Flokkur C tvöfaldar tekjurnar á herbergi en fækkar herbergjum um fimmtung og kallar á vörumerki, F&B-rekstur og þjónustustig sem þarf að staðfesta með rekstraraðila.</div></div>
 </div></section>
 
 <section id="s6"><div class="k">6 · C</div><h2>Leiga sem hótelið þolir</h2><p class="lead">Byggt upp eftir USALI-uppgjörsstaðli hótela og borið saman við íslenska samninga. 123 herbergi, m.kr á ári.</p>
-{tbl(['Fl.', 'Tekjur', 'Deildarframlegð', 'GOP', 'FF&E 4%', 'Leiga USALI (65% af EBITDAR)', 'Leiga ODDSSON (max 30% herb. / 25% alls)', 'Leiga Næslands (34% herb.)', 'Rekstraraðili eftir leigu (USALI / ODDSSON)', 'Leiga á herbergi, m.kr (USALI / ODDSSON)'], usali_rows)}
+{tbl(['Fl.', 'Tekjur', 'Deildarframlegð', 'GOP', 'FF&E 4%', 'Leiga USALI (65% af EBITDAR)', 'Leiga ODDSSON (max 30% herb. / 25% alls)', 'Leiga Næslands (35% herb.)', 'Rekstraraðili eftir leigu (USALI / ODDSSON)', 'Leiga á herbergi, m.kr (USALI / ODDSSON)'], usali_rows)}
 <p class="src">Forsendur USALI: herbergjadeild kostar 32% (laun 18%, sölukostnaður og OTA 8%, þvottur og vörur 6%); veitingadeild 75%; annað 50%; ódeilt 19% (stjórnun 7, markaðsmál 4, UT 1,5, viðhald 3,5, orka 3); enginn stjórnunarsamningur (eigin rekstur); FF&E-sjóður 4%. Fastur leigusamningur = 65% af EBITDAR eftir FF&E til leigusala (alþjóðleg venja 60–70%).</p>
 <div class="grid g2" style="margin-top:14px">
 <div>{tbl(['Viðmið', 'Gildi', 'Heimild'], bench_rows, 'wrap')}</div>
-<div><div class="callout"><b>Niðurstaða um C.</b> Fyrir þetta hús er leiga á bilinu <b>20–25% af heildartekjum</b> raunhæf: neðri mörkin úr USALI-uppbyggingu með 65% til leigusala, efri mörkin úr samningi ÍF sjálfs við RR hótel um ODDSSON (30% af herbergistekjum eða 25% af heildartekjum). Flóra gerði ráð fyrir 30% í Þorlákshöfn og skildi rekstraraðilann eftir með 2–4% EBITDA, sem er ekki sjálfbært. Tala Næslands, 34% af herbergistekjum, lendir á 22–28% af heildartekjum eftir flokki og er því ekki fráleit, en hún var ekki rökstudd.</div>
+<div><div class="callout"><b>Niðurstaða um C.</b> Fyrir þetta hús er leiga á bilinu <b>20–25% af heildartekjum</b> raunhæf: neðri mörkin úr USALI-uppbyggingu með 65% til leigusala, efri mörkin úr samningi ÍF sjálfs við RR hótel um ODDSSON (30% af herbergistekjum eða 25% af heildartekjum). Flóra gerði ráð fyrir 30% í Þorlákshöfn og skildi rekstraraðilann eftir með 2–4% EBITDA, sem er ekki sjálfbært. Leiguþol Næslands 27.9., 460 m.kr = 35% af herbergistekjum án F&B, lendir á 25–29% af heildartekjum eftir flokki: efst í markaðsbilinu, með 10% eftir hjá rekstraraðila. Það þarf rekstraraðila sem skrifar undir það.</div>
 <div class="callout"><b>Hvað Íslandshótel greiða í raun.</b> Nýi samningurinn við Reiti gefur 1,53 m.kr NOI á herbergi á ári fyrir uppgerð fjögurra stjörnu hótel. Okkar B-flokkur þarf 3,9–4,4 og C-flokkur 5,0–6,2 á herbergi. Munurinn er verðflokkurinn: 25 þ.kr ADR á móti 48–65 þ.kr. Það er fyrsta spurningin til Íslandshótela: trúa þau á þessa verðflokka í þessu húsi?</div>
 <div class="callout"><b>Form leigusamnings.</b> Blandaður samningur með grunnleigu (t.d. 70% af væntri leigu, vísitölubundinni) og 8–12% af brúttósölu, eins og í Fosshótel Austfjörðum, er bankahæfur og deilir uppsveiflunni. Hreinn veltusamningur eins og ODDSSON er ekki bankahæfur fyrir 65% LTV endurfjármögnun.</div></div>
 </div></section>
@@ -226,16 +221,16 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 </div>
 <div class="callout" style="margin-top:18px"><b>Keðjan.</b> Rétt verð = [ (NOI / krafa) / (1 + D) − A − fjármagnskostnaður á A (A × 70% × 10,2% × 1 ár) − biðtími (3 ár fasteignagjöld o.fl. að frádreginni Kolaportsleigu) − stimpilgjald og kaupkostnaður ] / (1 + 70% × 10,2% × 4,5 ár). NOI = leiga − fasteignagjöld eftir endurmat (×1,25) − tryggingar − viðhaldssjóður 0,5% af A − umsýsla 1%. Skattar ekki reiknaðir. Sjóðstreymislíkan með IRR er í Excel-skjalinu.</div></section>
 
-<section id="s8"><div class="k">8</div><h2>Rétt verð · reiknivél</h2><p class="lead">Stilltu A, B, C, D og jarðhæðina. Verðið er afleidd stærð. A er úr áætlun ÍF v1.0 (hús fullbúið án lauss búnaðar, rekstraraðili leggur til búnað); herbergjafjöldi færir 35% af A, gæðaflokkur ±7–12% á innanhússfrágang.</p>
+<section id="s8"><div class="k">8</div><h2>Rétt verð · reiknivél</h2><p class="lead">Stilltu A, B, C, D og jarðhæðina. Verðið er afleidd stærð. A er úr áætlun ÍF v1.1 (hús fullbúið án lauss búnaðar, jarðhæðarblokkir í skel, rekstraraðili leggur til búnað); herbergjafjöldi færir 35% af A, gæðaflokkur ±7–18% á innanhússfrágang.</p>
 <div class="calc"><div class="card">
-<label>Gæðaflokkur <span class="v" id="v_tier"></span></label><select id="tier"><option value="A">A · upper midscale</option><option value="B" selected>B · upper upscale</option><option value="C">C · lúxus</option></select>
-<label>Herbergi <span class="v" id="v_keys"></span></label><input type="range" id="keys" min="85" max="130" value="123" step="1">
-<label>Kostnaðarstig gagnvart áætlun ÍF v1.0 <span class="v" id="v_cf"></span></label><input type="range" id="cf" min="0.6" max="1.2" value="1.0" step="0.05">
+<label>Gæðaflokkur <span class="v" id="v_tier"></span></label><select id="tier"><option value="N" selected>N · þétt hönnunarhótel (skipan Næslands)</option><option value="A">A · upper midscale</option><option value="B">B · upper upscale</option><option value="C">C · lúxus</option></select>
+<label>Herbergi <span class="v" id="v_keys"></span></label><input type="range" id="keys" min="85" max="130" value="122" step="1">
+<label>Kostnaðarstig gagnvart áætlun ÍF v1.1 <span class="v" id="v_cf"></span></label><input type="range" id="cf" min="0.6" max="1.2" value="1.0" step="0.05">
 <label>C · leiguhlutfall af heildartekjum <span class="v" id="v_C"></span></label><input type="range" id="C" min="0.15" max="0.34" value="0.25" step="0.005">
-<label>Jarðhæð <span class="v" id="v_ground"></span></label><select id="ground"><option value="kolaport">Kolaportið á núverandi leigu (45 m.kr/ár)</option><option value="matarholl">Matarhöll/markaður á markaðsleigu (5.500 kr/m²/mán = 159 m.kr/ár)</option></select>
+<label>Kolaportssalur 2.410 m²: núverandi leiga 1.570 kr/m²/mán × <span class="v" id="v_kx"></span></label><input type="range" id="kx" min="1" max="4" value="1" step="0.5"><label>Jarðhæðarblokkir 1.082 m² við Tryggvagötu, kr/m²/mán <span class="v" id="v_blk"></span></label><input type="range" id="blk" min="0" max="6000" value="0" step="250">
 <label>D · arðsemiskrafa fjárfesta, álag á kostnað <span class="v" id="v_D"></span></label><input type="range" id="D" min="0" max="0.30" value="0.20" step="0.01">
 <label>Ávöxtunarkrafa kaupanda á NOI <span class="v" id="v_y"></span></label><input type="range" id="y" min="0.05" max="0.08" value="0.0675" step="0.0025">
-<p class="src" style="margin-top:14px">Sjálfgefið: B-flokkur, 123 herbergi, áætlun ÍF v1.0, ODDSSON-leiga 25%, Kolaportið óbreytt, D 20%, krafa 6,75%.</p>
+<p class="src" style="margin-top:14px">Sjálfgefið: N-flokkur (skipan Næslands), 122 herbergi, áætlun ÍF v1.1, leiga 25%, Kolaportið óbreytt og blokkirnar óleigðar, D 20%, krafa 6,75%.</p>
 </div>
 <div><table class="t wf" id="wf"></table><div style="margin-top:14px">Rétt verð fyrir húsið eins og það er: <span class="res" id="res"></span> <span class="src" id="res2"></span></div>
 <div class="callout" id="verdict"></div></div></div></section>
@@ -243,20 +238,21 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 <section id="s8b"><div class="k">8b</div><h2>Bakreikningur · hvað þarf nóttin að kosta?</h2><p class="lead">Sama keðja snúin við: tilboðsverð sem hlutfall af fasteignamati → heildarkostnaður → verðmæti sem fjárfestar þurfa → NOI → leiga → tekjur → meðalverð á selda nótt. Excel: „Tollhúsið - Bakreikningur v1.0".</p>
 <div class="calc"><div class="card">
 <label>Tilboðsverð, hlutfall af fasteignamati 4.725 m.kr <span class="v" id="b_v_pct"></span></label><input type="range" id="b_pct" min="0" max="1" value="0.42" step="0.01">
-<label>Herbergi <span class="v" id="b_v_keys"></span></label><input type="range" id="b_keys" min="85" max="130" value="123" step="1">
-<label>Nýting á ársgrundvelli <span class="v" id="b_v_occ"></span></label><input type="range" id="b_occ" min="0.6" max="0.85" value="0.75" step="0.01">
-<label>Veitingar og annað, hlutfall af herbergistekjum <span class="v" id="b_v_fb"></span></label><input type="range" id="b_fb" min="0.1" max="0.6" value="0.40" step="0.05">
+<label>Herbergi <span class="v" id="b_v_keys"></span></label><input type="range" id="b_keys" min="85" max="130" value="122" step="1">
+<label>Nýting á ársgrundvelli <span class="v" id="b_v_occ"></span></label><input type="range" id="b_occ" min="0.6" max="0.85" value="0.736" step="0.004">
+<label>Veitingar og annað, hlutfall af herbergistekjum <span class="v" id="b_v_fb"></span></label><input type="range" id="b_fb" min="0" max="0.6" value="0.20" step="0.05">
 <label>C · leiga sem hlutfall af heildartekjum <span class="v" id="b_v_C"></span></label><input type="range" id="b_C" min="0.18" max="0.32" value="0.25" step="0.005">
-<label>Kolaportsleiga: núverandi kr/m²/mán × margfaldari <span class="v" id="b_v_kx"></span></label><input type="range" id="b_kx" min="1" max="4" value="1" step="0.5">
+<label>Kolaportssalur 2.410 m²: núverandi 1.570 kr/m²/mán × margfaldari <span class="v" id="b_v_kx"></span></label><input type="range" id="b_kx" min="1" max="4" value="1" step="0.5"><label>Jarðhæðarblokkir 1.082 m² við Tryggvagötu, kr/m²/mán <span class="v" id="b_v_blk"></span></label><input type="range" id="b_blk" min="0" max="6000" value="0" step="250">
 <label>D · arðsemiskrafa fjárfesta, álag á kostnað <span class="v" id="b_v_D"></span></label><input type="range" id="b_D" min="0" max="0.3" value="0.20" step="0.01">
 <label>Ávöxtunarkrafa kaupanda á NOI <span class="v" id="b_v_y"></span></label><input type="range" id="b_y" min="0.05" max="0.08" value="0.0675" step="0.0025">
-<label>Kostnaðarstig gagnvart áætlun ÍF v1.0 <span class="v" id="b_v_cf"></span></label><input type="range" id="b_cf" min="0.7" max="1.2" value="1.0" step="0.05">
-<label><input type="checkbox" id="b_ffe"> Eigandi leggur til lausan búnað (739 m.kr) í stað rekstraraðila</label>
-<p class="src" style="margin-top:12px">Kolaportsleiga í dag ≈ 1.000 kr/m²/mán á 2.410 m² (29 m.kr/ár, staðfesta með samningi ríkis og borgar). Fjármögnun: 70% byggingarlán á 10,2% PIK, kaupverð fjármagnað 4,5 ár, framkvæmd 1 ár að meðaltali, biðtími 3 ár með fasteignagjöldum 93 m.kr/ár.</p>
+<label>Kostnaðarstig gagnvart áætlun ÍF v1.1 <span class="v" id="b_v_cf"></span></label><input type="range" id="b_cf" min="0.7" max="1.2" value="1.0" step="0.05">
+<label><input type="checkbox" id="b_ffe"> Eigandi leggur til lausan búnað (735 m.kr) í stað rekstraraðila</label>
+<p class="src" style="margin-top:12px">Kolaportssalur í dag 3,8 m.kr/mán = 45,6 m.kr/ár (1.570 kr/m²/mán) skv. Næslandi; jarðhæðarblokkirnar losna í skipan Næslands og eru óleigðar í grunni. Fjármögnun: 70% byggingarlán á 10,2% PIK, kaupverð fjármagnað 4,5 ár, framkvæmd 1 ár að meðaltali, biðtími 3 ár með fasteignagjöldum 93 m.kr/ár.</p>
 </div>
 <div><table class="t wf" id="b_wf"></table>
 <div style="margin-top:14px">Nauðsynlegt meðalverð á selda nótt: <span class="res" id="b_res"></span><div class="src" id="b_res2" style="margin-top:4px"></div></div>
 <div class="callout" id="b_verdict"></div>
+<div class="callout hl" id="b_naes"><b>Forsendur Næslands 27.9.2026 í sömu keðju.</b> Leiguþol 460 m.kr + Kolaportið 45,6 = 505,6 m.kr á ári ber kaupverð upp á <b>−681 m.kr</b> hjá langtímaeiganda (D 10%, 6,0%) og <b>−1.421 m.kr</b> hjá þróunaraðila (D 20%, 6,75%). Sama leiguþol með jarðhæðina alla á markaðsleigu (salur ×3 + blokkir 5.000 kr/m²/mán = 280 m.kr á ári) ber <b>+1.085 m.kr</b> hjá langtímaeiganda og um núll hjá þróunaraðila.</div>
 <div class="grid g3" style="margin-top:10px"><div class="card"><h3>Íslandshótel 2023</h3><div class="big">25,4 <small>þ.kr án VSK</small></div><p>Öll keðjan, nýting 68%</p></div><div class="card"><h3>Upper upscale, B</h3><div class="big">48 <small>þ.kr án VSK</small></div><p>Konsulat/Parliament-flokkur, €330</p></div><div class="card"><h3>Lúxus, C</h3><div class="big">65 <small>þ.kr án VSK</small></div><p>EDITION-flokkur, €450</p></div></div>
 </div></div></section>
 <section id="s9"><div class="k">9</div><h2>Sviðsmyndir</h2><p class="lead">123 herbergi, B- og C-flokkur, leiga eftir USALI (65%) eða ODDSSON (25%), kostnaður skv. áætlun ÍF v1.0 eða 20% undir, Kolaport eða matarhöll, þróunaraðili (D 20%, 6,75%) eða langtímaeigandi (D 10%, 6,0%). m.kr án lauss búnaðar.</p>
@@ -293,33 +289,34 @@ ul.tight{{margin:6px 0 0 18px;padding:0;font-size:13.5px;line-height:1.55}}ul.ti
 </main>
 <script>
 "use strict";
-const TIER={{A:{{adr:36000,occ:.72,fb:.20,other:.03,innan:210,ffe:3}},B:{{adr:48000,occ:.72,fb:.35,other:.05,innan:254,ffe:5}},C:{{adr:65000,occ:.68,fb:.45,other:.08,innan:320,ffe:8}}}};
+const TIER={{N:{{adr:38000,occ:.736,fb:.20,other:.03,innan:230,ffe:3.5}},A:{{adr:36000,occ:.72,fb:.20,other:.03,innan:210,ffe:3}},B:{{adr:48000,occ:.72,fb:.35,other:.05,innan:254,ffe:5}},C:{{adr:65000,occ:.68,fb:.45,other:.08,innan:320,ffe:8}}}};
+const HALL_M2=2409.6,HALL_NOW=1570,BLK_M2=1081.9;
 const A_CONV=6879.7,A_BOH=861.5,KOLA=2409.6;
 const A_V1={A_HUS:.1f},FFE_V1={A_FFE:.1f};
-function capex(t,keys,cf,ground){{const tierAdj={{A:0.93,B:1.0,C:1.12}}[t];const base=(A_V1*0.65+A_V1*0.35*keys/123)*tierAdj;const g=ground==='matarholl'?KOLA*220/1000*1.3:0;return {{total:(base+g)*cf}};}}
+function capex(t,keys,cf,ground){{const tierAdj={{N:1.0,A:0.93,B:1.06,C:1.18}}[t];const base=(A_V1*0.65+A_V1*0.35*keys/122)*tierAdj;return {{total:base*cf}};}}
 function rev(t,keys){{const T=TIER[t];const rooms=keys*T.adr*T.occ*365/1e6;return {{rooms,total:rooms*(1+T.fb+T.other)}};}}
-function calc(){{const t=tier.value,k=+keys.value,c=+cf.value,C=+Cc.value,g=ground.value,D=+Dd.value,y=+yy.value;
- const X=capex(t,k,c,g),Rv=rev(t,k),gr=g==='kolaport'?45.3:KOLA*5500*12/1e6;const leiga=C*Rv.total+gr;const fixed=(85.48+7.83)*1.25+5.5*1.5+X.total*.005;const noi=leiga-fixed-leiga*.01;const V=noi/y;const FA=X.total*.7*.102*1.0;const Hh=(85.48+7.83+5.53+10)*3-45.3*2;const K=4725.5*.016+20;const price=(V/(1+D)-X.total-FA-Hh-K)/(1+.7*.102*4.5);
+function calc(){{const t=tier.value,k=+keys.value,c=+cf.value,C=+Cc.value,kx=+kxs.value,blk=+blks.value,D=+Dd.value,y=+yy.value;const g='kolaport';
+ const X=capex(t,k,c,g),Rv=rev(t,k),gr=(HALL_M2*HALL_NOW*kx+BLK_M2*blk)*12/1e6;const leiga=C*Rv.total+gr;const fixed=(85.48+7.83)*1.25+5.5*1.5+X.total*.005;const noi=leiga-fixed-leiga*.01;const V=noi/y;const FA=X.total*.7*.102*1.0;const Hh=(85.48+7.83+5.53+10)*3-HALL_M2*HALL_NOW*12/1e6*2;const K=4725.5*.016+20;const price=(V/(1+D)-X.total-FA-Hh-K)/(1+.7*.102*4.5);
  const f=x=>x.toLocaleString('de-DE',{{maximumFractionDigits:0}});
- v_tier.textContent=t;v_keys.textContent=k;v_cf.textContent=Math.round(c*100)+'% af áætlun';v_C.textContent=(C*100).toFixed(1).replace('.',',')+'%';v_ground.textContent=g==='kolaport'?'45 m.kr':'159 m.kr';v_D.textContent=Math.round(D*100)+'%';v_y.textContent=(y*100).toFixed(2).replace('.',',')+'%';
+ v_tier.textContent=t;v_keys.textContent=k;v_cf.textContent=Math.round(c*100)+'% af áætlun';v_C.textContent=(C*100).toFixed(1).replace('.',',')+'%';v_kx.textContent='×'+kx;v_blk.textContent=f(blk)+' kr → jarðhæð alls '+f(gr)+' m.kr/ár';v_D.textContent=Math.round(D*100)+'%';v_y.textContent=(y*100).toFixed(2).replace('.',',')+'%';
  const rows=[['A · framkvæmd án VSK (m.kr/herb '+f(X.total/k)+')',-X.total],['B · tekjur hótels (herbergi '+f(Rv.rooms)+')',Rv.total],['Leiga hótels + jarðhæð ('+f(gr)+')',leiga],['Fastur eigandakostnaður og umsýsla',-(fixed+leiga*.01)],['NOI eiganda',noi],['Verðmæti = NOI / '+(y*100).toFixed(2).replace('.',',')+'%',V],['÷ (1 + D) → verðmæti að frádreginni arðsemiskröfu',V/(1+D)],['− A',-X.total],['− fjármagn á A',-FA],['− biðtími 3 ár (fasteignagjöld o.fl. − Kolaport)',-Hh],['− stimpilgjald og kaupkostnaður',-K],['÷ (1 + fjármagn á kaupverð 4,5 ár)','']];
  wf.innerHTML=rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+(r[1]===''?'':(r[1]<0?'<span class="neg">':'')+f(r[1])+(r[1]<0?'</span>':''))+'</td></tr>').join('');
  res.textContent=f(price)+' m.kr';res.className='res'+(price<0?' neg':'');res2.textContent=' · '+f(price/k)+' m.kr á herbergi · '+f(price/10150.8*1000)+' þ.kr/m² núverandi húss';
  verdict.innerHTML=price<0?'<b>Neikvætt:</b> við þessar forsendur ber verkefnið ekki kaupverð; það vantar '+f(-price)+' m.kr upp á þótt húsið væri gefið. Færðu C upp, kostnaðarstigið niður eða D niður til að sjá hvað þarf að vera satt.':'<b>Jákvætt:</b> þetta er hæsta verð fyrir húsið eins og það er sem skilar fjárfestum D-álaginu að gefnum A, B og C. Berðu saman við viðmið seljanda: eigið mat 2022 ≥2.000, fasteignamat 4.725.';}}
-const tier=document.getElementById('tier'),keys=document.getElementById('keys'),cf=document.getElementById('cf'),Cc=document.getElementById('C'),ground=document.getElementById('ground'),Dd=document.getElementById('D'),yy=document.getElementById('y');
-[tier,keys,cf,Cc,ground,Dd,yy].forEach(e=>e.addEventListener('input',calc));calc();
-function bak(){{const pct=+b_pct.value,keys=+b_keys.value,occ=+b_occ.value,fb=+b_fb.value,C=+b_C.value,kx=+b_kx.value,D=+b_D.value,y=+b_y.value,c=+b_cf.value,ffe=b_ffe.checked?1:0;
- const price=4725.5*pct;const A=(A_V1*0.65+A_V1*0.35*keys/123+ffe*FFE_V1*keys/123)*c;const K=4725.5*.016+20;const FA=A*.7*.102;const FP=price*.7*.102*4.5;const kolaNow=2409.6*1000*12/1e6;const Hh=(93.31+15.5)*3-kolaNow*2;
- const T=price+K+A+FA+FP+Hh;const V=T*(1+D);const noi=V*y;const fixed=93.31*1.25+8.25+A*.005;const leiga=(noi+fixed)/.99;const kola=kolaNow*kx;const hrent=leiga-kola;const rev=hrent/C;const rooms=rev/(1+fb);const nights=keys*365*occ;const adr=rooms*1e6/nights;const adrv=adr*1.11;
+const tier=document.getElementById('tier'),keys=document.getElementById('keys'),cf=document.getElementById('cf'),Cc=document.getElementById('C'),kxs=document.getElementById('kx'),blks=document.getElementById('blk'),Dd=document.getElementById('D'),yy=document.getElementById('y');
+[tier,keys,cf,Cc,kxs,blks,Dd,yy].forEach(e=>e.addEventListener('input',calc));calc();
+function bak(){{const pct=+b_pct.value,keys=+b_keys.value,occ=+b_occ.value,fb=+b_fb.value,C=+b_C.value,kx=+b_kx.value,blk=+b_blk.value,D=+b_D.value,y=+b_y.value,c=+b_cf.value,ffe=b_ffe.checked?1:0;
+ const price=4725.5*pct;const A=(A_V1*0.65+A_V1*0.35*keys/122+ffe*FFE_V1*keys/122)*c;const K=4725.5*.016+20;const FA=A*.7*.102;const FP=price*.7*.102*4.5;const kolaNow=HALL_M2*HALL_NOW*12/1e6;const Hh=(93.31+15.5)*3-kolaNow*2;
+ const T=price+K+A+FA+FP+Hh;const V=T*(1+D);const noi=V*y;const fixed=93.31*1.25+8.25+A*.005;const leiga=(noi+fixed)/.99;const kola=kolaNow*kx+BLK_M2*blk*12/1e6;const hrent=leiga-kola;const rev=hrent/C;const rooms=rev/(1+fb);const nights=keys*365*occ;const adr=rooms*1e6/nights;const adrv=adr*1.11;
  const f=x=>x.toLocaleString('de-DE',{{maximumFractionDigits:0}});
- b_v_pct.textContent=Math.round(pct*100)+'% = '+f(price)+' m.kr';b_v_keys.textContent=keys;b_v_occ.textContent=Math.round(occ*100)+'%';b_v_fb.textContent=Math.round(fb*100)+'%';b_v_C.textContent=(C*100).toFixed(1).replace('.',',')+'%';b_v_kx.textContent='×'+kx+' = '+f(kola)+' m.kr/ár';b_v_D.textContent=Math.round(D*100)+'%';b_v_y.textContent=(y*100).toFixed(2).replace('.',',')+'%';b_v_cf.textContent=Math.round(c*100)+'%';
+ b_v_pct.textContent=Math.round(pct*100)+'% = '+f(price)+' m.kr';b_v_keys.textContent=keys;b_v_occ.textContent=Math.round(occ*100)+'%';b_v_fb.textContent=Math.round(fb*100)+'%';b_v_C.textContent=(C*100).toFixed(1).replace('.',',')+'%';b_v_kx.textContent='×'+kx;b_v_blk.textContent=f(blk)+' kr → jarðhæð alls '+f(kola)+' m.kr/ár';b_v_D.textContent=Math.round(D*100)+'%';b_v_y.textContent=(y*100).toFixed(2).replace('.',',')+'%';b_v_cf.textContent=Math.round(c*100)+'%';
  const rows=[['Tilboðsverð',price],['Stimpilgjald og kaupkostnaður',K],['A · framkvæmd ('+f(A/keys)+' m.kr/herb)',A],['Fjármagnskostnaður á framkvæmd og kaupverð',FA+FP],['Biðtími 3 ár að frádreginni Kolaportsleigu',Hh],['Heildarkostnaður',T],['× (1 + D) = verðmæti sem fjárfestar þurfa',V],['× krafa = nauðsynlegt NOI á ári',noi],['+ fastur eigandakostnaður = leigutekjur alls',leiga],['− jarðhæð ('+f(kola)+') = leiga hótels',hrent],['÷ C = heildartekjur hótels',rev],['÷ (1 + F&B) = herbergistekjur',rooms],['÷ '+f(nights)+' seldar nætur',adr]];
  b_wf.innerHTML=rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+f(r[1])+'</td></tr>').join('');
  b_res.textContent=f(adr)+' kr án VSK';b_res.className='res'+(adr>70000?' neg':'');
- b_res2.textContent=f(adrv)+' kr með VSK · €'+f(adrv/145)+' · sumar ≈ '+f(adrv*1.35)+' · vetur ≈ '+f(adrv*0.78)+' · RevPAR '+f(adr*occ)+' · tekjur á herbergi '+(rev/keys).toFixed(1).replace('.',',')+' m.kr · rekstraraðili heldur ≈ '+Math.round((0.37-0.04-C)*100)+'% eftir leigu';
+ b_res2.textContent=f(adrv)+' kr með VSK · €'+f(adrv/145)+' · sumar ≈ '+f(adrv*1.35)+' · vetur ≈ '+f(adrv*0.78)+' · RevPAR '+f(adr*occ)+' · tekjur á herbergi '+(rev/keys).toFixed(1).replace('.',',')+' m.kr · rekstraraðili heldur ≈ '+Math.round((0.40-0.04-C)*100)+'% eftir leigu · Næsland 27.9.: 39.600 kr';
  let v='';if(adr<30000)v='<b>Millistig.</b> Þetta er verð sem íslensk hótelkeðja nær í dag; kaupverðið er raunhæft á þessum forsendum.';else if(adr<50000)v='<b>Efra millistig / upper upscale.</b> Konsulat- og Parliament-verð; krefst vörumerkis, F&B og markaðssetningar, en er til í Reykjavík.';else if(adr<68000)v='<b>Lúxus.</b> EDITION-verðflokkur á ársgrundvelli. Aðeins fáein hótel á Íslandi ná þessu; rekstraraðili þarf að staðfesta.';else v='<b>Yfir markaðnum.</b> Ekkert hótel í Reykjavík nær þessu meðalverði yfir árið. Kaupverðið, D eða krafan þurfa að lækka, eða Kolaportsleigan að hækka.';
  b_verdict.innerHTML=v;}}
-['b_pct','b_keys','b_occ','b_fb','b_C','b_kx','b_D','b_y','b_cf','b_ffe'].forEach(id=>document.getElementById(id).addEventListener('input',bak));bak();
+['b_pct','b_keys','b_occ','b_fb','b_C','b_kx','b_blk','b_D','b_y','b_cf','b_ffe'].forEach(id=>document.getElementById(id).addEventListener('input',bak));bak();
 const secs=[...document.querySelectorAll('section')],links=[...document.querySelectorAll('nav a')];
 document.addEventListener('keydown',e=>{{if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;const y=window.scrollY+10;let i=secs.findIndex(s=>s.offsetTop>y);if(i<0)i=secs.length;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){{e.preventDefault();(secs[Math.min(i,secs.length-1)]||secs[0]).scrollIntoView();}}if(e.key==='ArrowLeft'||e.key==='PageUp'){{e.preventDefault();(secs[Math.max(i-2,0)]).scrollIntoView();}}}});
 const io=new IntersectionObserver(es=>es.forEach(en=>{{if(en.isIntersecting){{links.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+en.target.id));}}}}),{{threshold:.4}});secs.forEach(s=>io.observe(s));
@@ -329,7 +326,7 @@ if MODE == 'naesland':
     REPL = [
         ('Vinnuskjal GT/ÍF. Gögn frá Næslandi, COWI, TORG, skjalasafni Reykjavíkur og áætlunum ÍF. Ekkert hefur farið út úr húsi.', 'Kynning Íslenskra fasteigna fyrir Næsland · trúnaðarmál · 29. september 2026. Gögn frá Næslandi, COWI, TORG, skjalasafni Reykjavíkur og áætlunum ÍF.'),
         ('<nav><h1>TOLLHÚSIÐ</h1><div class="sub">Næsland · greining fyrir tilboð · trúnaðarmál</div>', '<nav><h1>TOLLHÚSIÐ</h1><div class="sub">Kynning ÍF fyrir Næsland · trúnaðarmál</div>'),
-        ('Drög 2 · 25.9.2026 · líkan v0.4', 'Kynningarútgáfa · 29.9.2026'),
+        ('Drög 3 · 28.9.2026 · líkan v0.5', 'Kynningarútgáfa · 29.9.2026'),
         ("localStorage.removeItem('tollhus_pass')", "localStorage.removeItem('tollhus_kyn_pass')"),
         ('ODDSSON-samningur ÍF 25% (30% af herbergistekjum)', 'leigusamningur sem ÍF þekkir um 77 herbergja hótel í Reykjavík: 25% (30% af herbergistekjum)'),
         ('ODDSSON – leigusamningur ÍF/RR hótel 2020 (77 herb., Grensásvegur 16A)', 'Leigusamningur um 77 herbergja hótel í Reykjavík (2020), sem ÍF þekkir'),

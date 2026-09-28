@@ -27,8 +27,8 @@ for j, h in enumerate(hdr, 1): c = wsS.cell(4, j, h); c.font = BOLD; c.fill = GR
 rows = [
     ('Kjallari (01-0001 skjalageymsla 684 + færiband 26,4)', 710.4, 0, 710.4, 0, 'Fasteignaskrá. Verður þvottahús, geymslur, tæknirými: gert nothæft, ekki innréttað sem gestarými.'),
     ('1. hæð: stigagangar og lyftur (01-0100, 01-0102, 01-0107)', 113.5, 0, 113.5, 0, 'Fasteignaskrá 90,3 + 12 + 11,2'),
-    ('1. hæð: afgreiðsla tollstjóra (01-0101)', 730.0, 730.0, 0, 0, 'Austurblokk við Pósthússtræti/Steinbryggju: lobby, móttaka, veitingastaður, bar. Grunnmynd 1. hæðar.'),
-    ('1. hæð: uppboðssalur (01-0103) + lögregla (01-0104)', 351.9, 351.9, 0, 0, '218,4 + 133,5: eldhús, fundarrými, starfsmannaaðstaða. Gamla lögreglustöðin þarfnast algjörrar endurnýjunar (COWI 2025 kafli 2.3).'),
+    ('1. hæð: afgreiðsla tollstjóra (01-0101) – ÚTLEIGURÝMI Í SKEL', 730.0, 730.0, 0, 0, 'Austurblokk við Pósthússtræti/Steinbryggju. Í skipan Næslands 27.9.2026 er lobby á 2. hæð; blokkin er gerð leiguhæf í skel (verslun/veitingar) og leigð sér.'),
+    ('1. hæð: uppboðssalur (01-0103) + lögregla (01-0104) – ÚTLEIGURÝMI Í SKEL', 351.9, 351.9, 0, 0, '218,4 + 133,5. Vesturblokk við Naustin; skel til útleigu. Gamla lögreglustöðin þarfnast algjörrar endurnýjunar (COWI 2025 kafli 2.3).'),
     ('1. hæð: vörugeymsla (01-0105)', 1417.1, 0, 0, 1417.1, 'Kolaportssalur. UTAN áætlunar nema COWI-viðgerðir (kafli 7).'),
     ('1. hæð: „hugsað fyrir Kolaport" (01-0106)', 992.5, 0, 0, 992.5, 'Kolaportssalur. UTAN áætlunar.'),
     ('2. hæð (01-0200…01-0206)', 1591.4, 1591.4, 0, 0, 'Norðurhlið álmunnar liggur inn í Kolaportssalinn: einhliða gangur, 14–17 herbergi + gym/spa.'),
@@ -54,20 +54,21 @@ wsS.cell(r, 1, 'Þar af breytt í gestarými (2.–5. hæð + jarðhæð austur/
 wsS.cell(r, 1, 'Þar af tæknirými / BOH (kjallari, stigar, lyftuhús)'); c = wsS.cell(r, 2, f'=D{SUMROW}'); c.number_format = NUM1; A_BOH = f"Stærðir!$B${r}"; r += 1
 wsS.cell(r, 1, 'Kolaportssalur – utan áætlunar'); c = wsS.cell(r, 2, f'=E{SUMROW}'); c.number_format = NUM1; A_KOLA = f"Stærðir!$B${r}"; r += 1
 wsS.cell(r, 1, 'Herbergjahæðir 2.–5. hæð'); c = wsS.cell(r, 2, f'=C11+C12+C13+C14'); c.number_format = NUM1; A_FLOORS = f"Stærðir!$B${r}"; r += 1
-wsS.cell(r, 1, 'Jarðhæð hótels (lobby, veitingar, eldhús, fundir)'); c = wsS.cell(r, 2, f'=C7+C8'); c.number_format = NUM1; A_GROUND = f"Stærðir!$B${r}"; r += 2
+wsS.cell(r, 1, 'Jarðhæð: útleigurými í skel (austur- og vesturblokk)'); c = wsS.cell(r, 2, f'=C7+C8'); c.number_format = NUM1; A_GROUND = f"Stærðir!$B${r}"; r += 1
+wsS.cell(r, 1, 'Almenn rými hótels á 2. og 3. hæð (móttaka, lounge, kaffihús, veitingastaður, bar, svíta)'); c = wsS.cell(r, 2, 950); c.font = BLUE; c.number_format = NUM1; A_PUBLIC = f"Stærðir!$B${r}"; wsS.cell(r, 6, 'Skipan Næslands 27.9.2026: móttaka/lounge/kaffihús á 2. hæð (~600 m²), res/bar á 3. hæð (~350 m²). Dregst frá herbergjahæðum.').font = SRC; r += 2
 wsS.cell(r, 1, 'Byggingarvísitala mars 2018 (grunnur 2009)'); c = wsS.cell(r, 2, 137.0); c.font = BLUE; c.number_format = NUM1; BVT18 = f"Stærðir!$B${r}"; wsS.cell(r, 6, 'Hagstofa, VIS13001: 2018M03 = 137,0 (Grensásvegs-áætlun dags. mars 2018)').font = SRC; r += 1
 wsS.cell(r, 1, 'Byggingarvísitala maí 2025 (grunnur 2009)'); c = wsS.cell(r, 2, BVT_MAI25); c.font = BLUE; c.number_format = NUM1; BVT25 = f"Stærðir!$B${r}"; wsS.cell(r, 6, 'Hagstofa, VIS13001: 2025M05 (Hamranes EAC á verðlagi maí 2025)').font = SRC; r += 1
 wsS.cell(r, 1, 'Byggingarvísitala september 2026 (grunnur 2009)'); c = wsS.cell(r, 2, 206.9); c.font = BLUE; c.number_format = NUM1; BVT26 = f"Stærðir!$B${r}"; wsS.cell(r, 6, 'Hagstofa, VIS13001: 2026M09 = 206,9 (2026M08 = 206,7; á 2021-grunni 129,6). Hyatt EAC júlí 2026 er á sama verðlagi.').font = SRC; r += 1
 wsS.cell(r, 1, 'Uppreikningsstuðull Grensásvegur 2018 → 2026').font = BOLD; c = wsS.cell(r, 2, f'={BVT26}/{BVT18}'); c.number_format = '0.000'; c.font = BOLD; F18 = f"Stærðir!$B${r}"; r += 1
 wsS.cell(r, 1, 'Uppreikningsstuðull Hamranes 2025 → 2026'); c = wsS.cell(r, 2, f'={BVT26}/{BVT25}'); c.number_format = '0.000'; F25 = f"Stærðir!$B${r}"; r += 2
-wsS.cell(r, 1, 'Herbergi (forsenda, sjá talningu af grunnmyndum)').font = BOLD; c = wsS.cell(r, 2, 123); c.font = BLUE; c.fill = YEL; c.number_format = '0'; KEYS = f"Stærðir!$B${r}"
-wsS.cell(r, 6, 'Talning: 5. hæð 39, 4. hæð 39, 3. hæð 28, 2. hæð 17 við 3,9 m breið herbergi (27–30 m² nettó); 106 við 4,5 m; Næsland-skipan 89.').font = SRC; r += 1
+wsS.cell(r, 1, 'Herbergi (skipan Næslands 27.9.2026 af DWG-teikningum)').font = BOLD; c = wsS.cell(r, 2, 122); c.font = BLUE; c.fill = YEL; c.number_format = '0'; KEYS = f"Stærðir!$B${r}"
+wsS.cell(r, 6, 'Næsland 27.9.2026: 4.+5. hæð 84 (56 std / 28 sup), 3. hæð 20 (14/6), 2. hæð 18 + svíta = 122: 86 Standard 2,8×7,0 m (19,6 m²), 35 Superior 4,2×7,0 m (29,4 m²), 1 svíta. Talning ÍF af 1:200: 123 við 3,9 m breidd.').font = SRC; r += 1
 wsS.cell(r, 1, 'Brúttó m² á herbergi (hótelhluti / herbergi)'); c = wsS.cell(r, 2, f'={A_HOTEL}/{KEYS}'); c.number_format = NUM1; r += 1
-wsS.cell(r, 1, 'Meðalstærð herbergis nettó, m²'); c = wsS.cell(r, 2, 28); c.font = BLUE; c.number_format = NUM1; ROOM_M2 = f"Stærðir!$B${r}"; r += 1
+wsS.cell(r, 1, 'Meðalstærð herbergis nettó með baði, m²'); c = wsS.cell(r, 2, f'=(86*19.6+35*29.4+1*60)/122'); c.number_format = NUM1; ROOM_M2 = f"Stærðir!$B${r}"; wsS.cell(r, 6, 'Vegið meðaltal skipanar Næslands = 22,7 m²').font = SRC; r += 1
 wsS.cell(r, 1, 'Herbergjaflötur alls, nettó m² (herbergi × meðalstærð)'); c = wsS.cell(r, 2, f'={KEYS}*{ROOM_M2}'); c.number_format = NUM1; A_ROOMS = f"Stærðir!$B${r}"; r += 1
-wsS.cell(r, 1, 'Gangar, kjarnar og þjónusturými á herbergjahæðum (afgangur)'); c = wsS.cell(r, 2, f'={A_FLOORS}-{A_ROOMS}'); c.number_format = NUM1; A_CORR = f"Stærðir!$B${r}"; r += 1
-wsS.cell(r, 1, 'Baðherbergi, m² hvert (inni í meðalstærð)'); c = wsS.cell(r, 2, 4.5); c.font = BLUE; c.number_format = NUM1; BATH_M2 = f"Stærðir!$B${r}"; r += 2
-wsS.cell(r, 1, 'Svar við spurningunni um Kolaportið: Kolaportssalurinn (2.410 m²) er hvergi inni í kostnaði hótelsins. Hann kemur aðeins fyrir sem sérmerkt COWI-viðgerðarlína í kafla 7 (þak, gaflar, hringhurð), sem má strika út ef borgin/rekstraraðili ber hana. Kr/m² eru reiknuð á hótelhlutann einan, 7.741 m² með tæknirýmum.').font = Font(name=F, size=10, italic=True)
+wsS.cell(r, 1, 'Gangar, kjarnar og þjónusturými á herbergjahæðum (afgangur eftir herbergi og almenn rými)'); c = wsS.cell(r, 2, f'={A_FLOORS}-{A_ROOMS}-{A_PUBLIC}'); c.number_format = NUM1; A_CORR = f"Stærðir!$B${r}"; r += 1
+wsS.cell(r, 1, 'Baðherbergi, m² hvert (inni í meðalstærð)'); c = wsS.cell(r, 2, 4.0); c.font = BLUE; c.number_format = NUM1; BATH_M2 = f"Stærðir!$B${r}"; r += 2
+wsS.cell(r, 1, 'Kolaportssalurinn (2.410 m²) er hvergi inni í kostnaði hótelsins. Hann kemur aðeins fyrir sem sérmerkt COWI-viðgerðarlína í kafla 7 (þak, gaflar, hringhurð), sem má strika út ef borgin/rekstraraðili ber hana. Kr/m² eru reiknuð á hótelhlutann einan, 7.741 m² með tæknirýmum.').font = Font(name=F, size=10, italic=True)
 
 # ============================================================ kaflablöð
 CH = {}   # chapter key -> (sheet, total cell ref)
@@ -150,13 +151,14 @@ chapter('3 Lagnir', '3. Pípulagnir, hitakerfi, loftræsing og vatnsúðakerfi',
     ('Baðherbergi: neysluvatn, frárennsli, tengingar, hreinlætistæki', 'herb', f'={KEYS}', 950000, f'Næsland: salerni 208 + handlaug 160 + baðkar 240 þ.kr m/VSK = 490 án VSK aðeins tæki; {GR}: lagnir í bað 2018; {HY} 7. hæð FOH lagnir og loftræsing 95 þ.kr/m²'),
     ('Stofnlagnir, stammar og lagnastokkar milli hæða (neysluvatn, frárennsli, hiti)', 'm²', f'={A_CONV}', 11000, f'{HAM} kafli 3 (lagnir + loftræsing) 24,8 þ.kr/m² nýbygging með einingum; hér allt nýtt utan eininga'),
     ('Hitakerfi: ofnar/gólfhiti í herbergjum og handklæðaofnar', 'herb', f'={KEYS}', 260000, 'Næsland: ofnakerfi 200 + handklæðaofn 35 þ.kr m/VSK á herbergi'),
-    ('Hitakerfi í almennum rýmum, göngum og BOH', 'm²', f'={A_GROUND}+{A_CORR}+{A_BOH}', 9000, 'Mat ÍF'),
+    ('Hitakerfi í almennum rýmum, göngum og BOH', 'm²', f'={A_PUBLIC}+{A_CORR}+{A_BOH}', 9000, 'Mat ÍF'),
+    ('Jarðhæðarblokkir í skel: stofnlagnir og tengingar fyrir leigutaka', 'm²', f'={A_GROUND}', 12000, 'Skel til útleigu; leigutaki innréttar'),
     ('Ofnalagnir í gólfstokk 4. hæðar austur endurnýjaðar (ryð vegna leka)', 'heild', 1, 8000000, f'{CO25} forgangsatriði 6'),
     ('Inntök hitaveitu og vatns, varmaskiptar, dælur, tæknirými', 'heild', 1, 28000000, 'Mat ÍF; núverandi inntök fyrir skrifstofur, hótel þarf mun meira heitt vatn'),
     ('Eldhús: lagnir, fituskilja, gufugleypir tengingar', 'heild', 1, 18000000, 'Mat ÍF; Hyatt eldhústæki 7. hæð BOH 10 m.kr aðeins tæki'),
     'Loftræsing',
     ('Loftræsing herbergja (VAV/fan-coil eða útsog + innblástur um ganga)', 'herb', f'={KEYS}', 380000, f'{HY}: fan coil viðbót 7. hæð; Næsland: útsog 120 stöðum 10,4 m.kr + loftræsting 4 m.kr m/VSK er ekki nothæft'),
-    ('Loftræsisamstæður, stokkar og stýringar fyrir almenn rými, eldhús, spa/gym', 'm²', f'={A_GROUND}', 55000, f'{CO25}: keypt samstæða óuppsett í miðrými 2. hæðar dugar ekki fyrir hótel; stýringar úreltar'),
+    ('Loftræsisamstæður, stokkar og stýringar fyrir almenn rými, eldhús, spa/gym', 'm²', f'={A_PUBLIC}', 55000, f'{CO25}: keypt samstæða óuppsett í miðrými 2. hæðar dugar ekki fyrir hótel; stýringar úreltar'),
     ('Loftræsing ganga, kjarna og BOH', 'm²', f'={A_CORR}+{A_BOH}', 14000, 'Mat ÍF'),
     'Brunavarnir',
     ('Vatnsúðakerfi í öllu húsi (hótelhluti)', 'm²', f'={A_HOTEL}', 13000, 'Næsland 12,8 þ.kr/m² m/VSK; mat ÍF svipað án VSK með dælustöð'),
@@ -165,7 +167,8 @@ chapter('3 Lagnir', '3. Pípulagnir, hitakerfi, loftræsing og vatnsúðakerfi',
 
 chapter('4 Raflagnir', '4. Raflagnir, lýsing, öryggis- og hússtjórnarkerfi, lyftur', [
     ('Raflagnir og lýsing í herbergjum (tenglar, rofar, lýsing, hótelkortakerfi, sjónvarpstengi)', 'herb', f'={KEYS}', 780000, f'{HY} 7. hæð FOH rafmagn 119 þ.kr/m² × ~30 m² ≈ 3,6 m.kr á lúxusherbergi með AV; hér upper upscale án AV'),
-    ('Raflagnir og lýsing í almennum rýmum (lobby, veitingar, eldhús, fundir, spa)', 'm²', f'={A_GROUND}', 60000, f'{HY} FOH 119 þ.kr/m² lúxus; hér 60'),
+    ('Raflagnir og lýsing í almennum rýmum (lobby, veitingar, eldhús, fundir, spa)', 'm²', f'={A_PUBLIC}', 60000, f'{HY} FOH 119 þ.kr/m² lúxus; hér 60'),
+    ('Jarðhæðarblokkir í skel: stofnlagnir rafmagns og lýsing í skel', 'm²', f'={A_GROUND}', 18000, 'Skel til útleigu'),
     ('Raflagnir og lýsing á göngum, kjörnum og BOH', 'm²', f'={A_CORR}+{A_BOH}', 28000, 'Mat ÍF'),
     ('Aðaltafla, stofnlagnir, dreifitöflur á hæðum, rafmagnsinntak (aukin heimild)', 'heild', 1, 60000000, f'{CO25}: töflur í ágætu eftirliti en þarf tiltekt; hótel þarf mun meira afl (eldhús, loftræsing)'),
     ('Brunaviðvörunarkerfi og neyðarlýsing', 'm²', f'={A_HOTEL}', 5000, 'Mat ÍF; krafa í hóteli'),
@@ -178,26 +181,28 @@ chapter('4 Raflagnir', '4. Raflagnir, lýsing, öryggis- og hússtjórnarkerfi, 
 
 chapter('5 Innanhúss', '5. Frágangur innanhúss', [
     'Herbergi (magn = herbergjafjöldi; einingarverð á herbergi)',
-    ('Hljóðeinangraðir gipsveggir milli herbergja og að gangi (EI60, 55 dB)', 'herb', f'={KEYS}', f'=30*14200*{F18}', f'{GR}: gifsveggir hljóðkrafa 14.200 kr/m² 2018 → 20.600 2026; ~30 m² á herbergi'),
-    ('Baðherbergi: flísar veggir og gólf, sturtugler, innrétting, spegill, fylgihlutir', 'herb', f'={KEYS}', f'=25*14000*{F18}+900000', f'Næsland: flísar 30 þ/m² m/VSK, fastur búnaður bað 200 þ; {GR}: flísar 14.000 kr/m² 2018; 4,5 m² bað → 25 m² flísar × 24 þ = 0,6 + innrétting/gler 0,6 + fylgihlutir 0,3'),
+    ('Hljóðeinangraðir gipsveggir milli herbergja og að gangi (EI60, 55 dB)', 'herb', f'={KEYS}', f'=26*14200*{F18}', f'{GR}: gifsveggir hljóðkrafa 14.200 kr/m² 2018 → 20.600 2026; ~30 m² á herbergi'),
+    ('Baðherbergi 4 m²: flísar veggir og gólf, sturtugler, innrétting, spegill, fylgihlutir', 'herb', f'={KEYS}', f'=22*14000*{F18}+850000', f'Næsland: flísar 30 þ/m² m/VSK, fastur búnaður bað 200 þ; {GR}: flísar 14.000 kr/m² 2018; 4,5 m² bað → 25 m² flísar × 24 þ = 0,6 + innrétting/gler 0,6 + fylgihlutir 0,3'),
     ('Herbergishurð EI30 með hótellæsingu og baðhurð', 'herb', f'={KEYS}', 520000, 'Næsland: 412,5 + 180 þ.kr m/VSK = 478 án VSK'),
-    ('Gólfefni herbergis (parket/teppi) með undirlagi og flotun', 'herb', f'={KEYS}', f'=24*(9500+1800)*{F18}', f'Næsland: parket 35 þ/m² m/VSK; {GR}: parket 9.500 kr/m² 2018 → 13.800; 24 m² × 14 þ + flotun'),
-    ('Loft: gifs/hljóðloft með lýsingaropum', 'herb', f'={KEYS}', f'=26*7100*{F18}', f'{GR}: föst gifsloft 7.100 kr/m² 2018 → 10.300; Næsland 25 þ/m² m/VSK'),
-    ('Málun og spörtlun veggja og lofta', 'herb', f'={KEYS}', f'=55*2800*{F18}', f'{GR}: 2.800 kr/m² 2018 → 4.100; ~55 m² fletir'),
-    ('Fastar innréttingar: fataskápur, höfuðgafl, skrifborð/hilla, minibar-skápur, gluggabekkur', 'herb', f'={KEYS}', 1100000, 'Næsland: fastur búnaður herbergi 400 þ.kr m/VSK er lágt; upper upscale sérsmíði'),
+    ('Gólfefni herbergis (parket/teppi) með undirlagi og flotun', 'herb', f'={KEYS}', f'=19*(9500+1800)*{F18}', f'Næsland: parket 35 þ/m² m/VSK; {GR}: parket 9.500 kr/m² 2018 → 13.800; 24 m² × 14 þ + flotun'),
+    ('Loft: gifs/hljóðloft með lýsingaropum', 'herb', f'={KEYS}', f'=21*7100*{F18}', f'{GR}: föst gifsloft 7.100 kr/m² 2018 → 10.300; Næsland 25 þ/m² m/VSK'),
+    ('Málun og spörtlun veggja og lofta', 'herb', f'={KEYS}', f'=48*2800*{F18}', f'{GR}: 2.800 kr/m² 2018 → 4.100; ~55 m² fletir'),
+    ('Fastar innréttingar: fataskápur, höfuðgafl, skrifborð/hilla, minibar-skápur, gluggabekkur', 'herb', f'={KEYS}', 950000, 'Næsland: fastur búnaður herbergi 400 þ.kr m/VSK er lágt; þétt hönnunarhótel með sérsmíði'),
     ('Frágangur við nýja gluggaveggi að innan (kistur, sólarvarnir, gluggabekkir)', 'herb', f'={KEYS}', 180000, 'Mat ÍF'),
     'Gangar, kjarnar og stigahús',
     ('Gangar: teppi, loft, veggklæðning, hurðir að stigahúsum, lýsingarop, skilti', 'm²', f'={A_CORR}', f'=(11000+9100+2*2800)*{F18}+25000', f'{GR}: teppi 11.000 kr/m² 2018, kerfisloft 9.100; {HY} FOH 300 þ.kr/m² lúxus; hér millistig'),
     ('Stigahús og lyftuforrými: steinflísar, handrið, málun, hurðir', 'hæð', 10, 4500000, 'Tveir kjarnar × 5 hæðir; Næsland: steinflísar 20 þ/m² m/VSK, hurðir 375 þ'),
-    'Almenn rými á jarðhæð',
-    ('Lobby, móttaka, setustofa, bókasafn/búð: gólf, loft, veggir, sérsmíði, lýsingarfrágangur', 'm²', 500, 260000, f'{HY} 7. hæð FOH innanhúss 300 þ.kr/m² (lúxus, 2026); Næsland: gólfefni jarðhæð 48 þ/m² m/VSK + lýsing 7,2 + bókasafn 2,7 m.kr'),
-    ('Veitingastaður og bar innanhúss (án lausra húsgagna)', 'm²', 400, 240000, f'{HY} FOH 300; Næsland bar 4 m.kr m/VSK'),
+    'Almenn rými hótels (2. hæð: móttaka, lounge, kaffihús; 3. hæð: veitingastaður og bar)',
+    ('Móttaka, lounge, kaffihús, bókasafn/búð á 2. hæð: gólf, loft, veggir, sérsmíði, lýsingarfrágangur', 'm²', 600, 240000, f'{HY} 7. hæð FOH innanhúss 300 þ.kr/m² (lúxus, 2026); Næsland: gólfefni jarðhæð 48 þ/m² m/VSK + lýsing 7,2 + bókasafn 2,7 m.kr'),
+    ('Veitingastaður og bar á 3. hæð innanhúss (án lausra húsgagna)', 'm²', 350, 240000, f'{HY} FOH 300; Næsland bar 4 m.kr m/VSK'),
     ('Eldhús: gólf/veggir/loft í eldhússtaðli, frárennslisrennur, innréttingar (án tækja)', 'm²', 180, 320000, 'Mat ÍF; heilbrigðiskröfur; Næsland eldhús 16,8 m.kr m/VSK með tækjum'),
     ('Fundarrými og vinnuaðstaða', 'm²', 130, 160000, 'Mat ÍF'),
-    ('Salerni gesta á jarðhæð og starfsmannaaðstaða', 'heild', 1, 30000000, f'{CO25} forgangsatriði 9: uppfæra stærstan hluta salernisaðstöðu'),
+    ('Salerni gesta og starfsmannaaðstaða', 'heild', 1, 30000000, f'{CO25} forgangsatriði 9: uppfæra stærstan hluta salernisaðstöðu'),
     'Spa, gym og þakgarðsálma innanhúss',
     ('Gym og spa (búningsklefar, gufa, meðferðarherbergi) innanhúss', 'm²', 350, 230000, f'{HY}: infrasaunur 4 stk 10,5 m.kr tilboð; Næsland gym 3,5 m.kr m/VSK'),
     ('Innanhússfrágangur yfirbyggðrar veitingaálmu á þakgarði', 'm²', 150, 220000, 'Mat ÍF; byggingin sjálf í kafla 7'),
+    'Jarðhæð: útleigurými í skel',
+    ('Austur- og vesturblokk jarðhæðar gerðar leiguhæfar í skel: gólf flotað, veggir, brunahólfun, inntök; leigutaki innréttar', 'm²', f'={A_GROUND}', 60000, 'Skipan Næslands 27.9.2026 losar 1.082 m² á jarðhæð við Tryggvagötu til útleigu (verslun, veitingar, markaður)'),
     'Tæknirými og BOH',
     ('Kjallari og tæknirými: gólfmálun, brunahólfun, hurðir, lýsingarfrágangur, þvottahús', 'm²', f'={A_BOH}', f'=7000*{F18}+40000', f'{GR}: epoxi 7.000 kr/m² 2018; brunaþéttingar'),
     ('Brunaþéttingar, eldvarnarhurðir og brunahólfun (utan herbergja)', 'heild', 1, 35000000, f'{GR}: brunaþéttingar 0,85 m.kr 2018 fyrir 3.400 m²; hótel mun strangara'),
@@ -294,7 +299,7 @@ wsB.cell(r + 3, 2, f'Viðmið: {HY} hönnun+stjórnun+umsýsla 1.178 m.kr = 15,6
 
 # ============================================================ SAMANTEKT
 ws = wb.create_sheet('Samantekt', 0); setw(ws, [52, 12, 16, 16, 14, 14, 14, 16, 16, 60])
-ws['A1'] = 'Tollhúsið – Næsland: kostnaðaráætlun fullbúins hótels, v1.0 (23.9.2026)'; ws['A1'].font = H1
+ws['A1'] = 'Tollhúsið – Næsland: kostnaðaráætlun fullbúins hótels, v1.1 (28.9.2026, skipan Næslands 122 herb.)'; ws['A1'].font = H1
 ws['A2'] = 'Innanhúss-útgáfa með heimildum. Kr á byggðan m² hótelhluta (7.741 m² með tæknirýmum, Kolaportssalur utan). Án VSK nema í dálki D. Verðlag september 2026.'; ws['A2'].font = SRC
 ws['A3'] = 'Helstu stærðir'; ws['A3'].font = H2
 ws['A4'] = 'Hótelhluti byggður, m²'; c = ws['B4']; c.value = f'={A_HOTEL}'; c.font = GRN; c.number_format = NUM1
@@ -378,8 +383,8 @@ r += 2
 ws.cell(r, 1, 'Lestur').font = H2; r += 1
 for t in [
     'Kolaportssalurinn (2.410 m²) er utan áætlunar að öllu leyti nema tveimur COWI-viðgerðarlínum í kafla 7 (þak, gaflar, hringhurð), sem eru sérmerktar og má strika út.',
-    'Kr/m² eru reiknuð á hótelhlutann einan, 7.741 m² (6.880 m² gestarými + 861 m² tæknirými). Það er sá grunnur sem ÍF notar venjulega.',
-    'Herbergjatengdir liðir eru með magn = herbergjafjöldi og einingarverð á herbergi, svo talan á herbergi sést beint. Húsbundnir liðir (gluggar, klæðning, frárennsli, kerfi, aðstaða) dreifast á herbergin og það er þar sem óhagstæð nýting (63 m² brúttó á herbergi við 123 herbergi) kemur fram.',
+    'Kr/m² eru reiknuð á hótelhlutann einan, 7.742 m² (þ.m.t. 1.082 m² útleigurými í skel á jarðhæð og 885 m² tæknirými). Það er sá grunnur sem ÍF notar venjulega.',
+    'Herbergjatengdir liðir eru með magn = herbergjafjöldi og einingarverð á herbergi, svo talan á herbergi sést beint. Húsbundnir liðir (gluggar, klæðning, frárennsli, kerfi, aðstaða) dreifast á herbergin. v1.1 (28.9.2026): 122 herbergi skv. skipan Næslands (86 Standard 19,6 m², 35 Superior 29,4 m², 1 svíta), lobby á 2. hæð, jarðhæðarblokkir í skel til útleigu.',
     'Heimildir eru við hverja línu í kaflablöðunum: COWI 2024/2025 fyrir magntölur og forgangsatriði, Hyatt L176 EAC 07/2026 fyrir raunverð á fullbúinni hótelhæð, Grensásvegur 2018 fyrir okkar eigin einingarverð (verðbætt ×1,45), Hamranes fyrir nýbyggingarviðmið, Næsland-skjalið til samanburðar. Þessar tilvísanir eru hreinsaðar út áður en nokkuð fer út úr húsi.',
 ]:
     ws.cell(r, 1, t).alignment = Alignment(wrap_text=True); ws.merge_cells(start_row=r, start_column=1, end_row=r, end_column=10); ws.row_dimensions[r].height = 30; r += 1
