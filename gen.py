@@ -368,7 +368,7 @@ if MODE == 'naesland':
     HTML = HTML.replace('<a href="#s8b">Bakreikningur · verð á nótt</a>', '<a href="#s8b">Bakreikningur · verð á nótt</a><a href="#s8c" style="color:var(--gold);font-weight:700">★ Möguleg tilboðssviðsmynd</a>')
     HTML = HTML.replace('.hero{{', '.hl{{border:2px solid var(--gold);background:#FFFBEA}}.hero{{') if '.hl{{' not in HTML else HTML
     HTML = HTML.replace('.hero{', '.hl{border:2px solid var(--gold);background:#FFFBEA}.nw td:first-child,.nw th:first-child{white-space:nowrap}.hero{', 1)
-    for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'þóknun', 'Þóknun', 'eignarhlut', 'verkefnastjóri', 'ÍF þekkir', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
+    for w in ('Hyatt', 'Hamranes', 'ODDSSON', 'þóknun', 'Þóknun', 'eignarhlut', 'verkefnastjóri', 'Flóra', 'Black Dunes', 'BBR', 'isfast', 'Stafir', 'Þ113', 'Grensás', 'Jón og Daníel', 'JHB', 'walk-away', 'GT '):
         n = len(_re.findall(w, _re.sub(r'data:image[^"]*', '', HTML)))
         if n: print(f'  [kynning] VIÐVÖRUN: "{w}" kemur fyrir {n}x')
     out = os.path.join(HERE, 'app_kynning.html')
